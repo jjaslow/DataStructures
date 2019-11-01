@@ -30,6 +30,26 @@
             }
         }
 
+        public static void InsertionSort(int[] array)
+        {
+            for(int x=0; x<array.Length; x++)
+            {
+                int temp = array[x];
+                int y=x;
+
+                for(y=x; y>0; y--)
+                {
+                    if(temp<array[y-1])
+                        array[y]=array[y-1];
+                    else
+                        break;
+                }
+
+                array[y]=temp;
+            }
+
+        }
+
 
 
 

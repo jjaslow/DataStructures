@@ -12,9 +12,9 @@ namespace MyExercises
         static void Main(string[] args)
         {
 
-            int[] List = { 7,3,1,5,2};
+            int[] List = { 1,2,3,4,5};
 
-            Sort.SelectionSort(List);
+            Sort.InsertionSort(List);
 
 
 
