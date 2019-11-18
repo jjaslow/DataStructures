@@ -4,7 +4,7 @@ namespace MyExercises
 {
     class jjHash
     {
-        int Length = 5;
+        int Length;
         LinkedList<Entry>[] Arr;
 
         public static char FirstNonRepeatingChar(string str)
@@ -63,8 +63,9 @@ namespace MyExercises
             }
         }
 
-        public jjHash()
+        public jjHash(int len)
         {
+            Length = len;
             Arr = new LinkedList<Entry>[Length];
         }
 

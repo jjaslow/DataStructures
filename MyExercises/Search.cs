@@ -153,6 +153,22 @@ namespace MyExercises
         }
 
 
+        public static int ExponentialSearch(int[] list, int value)
+        {
+
+            int b=1;
+
+            while (b<list.Length &&  value > list[b])
+            {
+                b *= 2;
+            }
+
+            int right = Math.Min(b, list.Length-1);
+            
+            return BinarySearchRecursive(list, value, b/2, right);
+
+
+        }
     }
 
 }
