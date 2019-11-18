@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MyExercises
@@ -151,6 +152,130 @@ namespace MyExercises
             }
 
             return sb.ToString();
+
+
+        }
+
+
+        public static char MostRepeatedChar(string str)
+        {
+            if (str == null || str.Length == 0)
+                throw new System.Exception("Empty String");
+
+            var Dict = new Dictionary<char, int>();
+            foreach(char ch in str)
+            {
+                if (Dict.ContainsKey(ch))
+                    Dict[ch]++;
+                else
+                    Dict.Add(ch, 1);
+            }
+
+            int count = 0;
+            char letter = char.MinValue;
+
+            foreach(char ch in Dict.Keys)
+            {
+                if (Dict[ch]>count)
+                {
+                    letter = ch;
+                    count = Dict[ch];
+
+                }
+
+            }
+
+            return letter;
+
+        }
+
+
+        public static string Capitalize(string str)
+        {
+            var StrArray = str.Trim().Split();
+
+            int length = 0;
+            var StrArray2 = new string[StrArray.Length];
+
+            for(int x=0; x<StrArray.Length;x++)
+            {
+                if (StrArray[x].Length!=0)
+                {
+                    StrArray2[length++] = capFirst(StrArray[x].ToString());
+                }
+
+            }
+
+            string result = string.Join(" ", StrArray2);
+            return result.Trim();
+        }
+
+
+        private static string capFirst(string str)
+        {
+            var sb = new StringBuilder();
+
+            if (str[0] >= 97 && str[0] <= 122)
+                sb.Append((char)(str[0] - 32));
+            else
+                sb.Append((char)str[0]);
+
+            for (int x = 1; x < str.Length; x++)
+                sb.Append(str[x]);
+
+            return sb.ToString();
+
+        }
+
+
+        public static bool Anagram(string str1, string str2)
+        {
+            if (str1 == null && str2 == null)
+                return true;
+
+            if (str1 == null || str2 == null)
+                return false;
+
+            if (str1.Length != str2.Length)
+                return false;
+
+            var Dict = new Dictionary<char, int>();
+
+            foreach (char ch in str1)
+            {
+                if (!Dict.ContainsKey(ch))
+                    Dict.Add(ch, 1);
+                else
+                    Dict[ch]++;
+            }
+
+            foreach (char ch in str2)
+            {
+                if (Dict.ContainsKey(ch))
+                    Dict[ch]--;
+                if (!Dict.ContainsKey(ch) || Dict[ch] < 0)
+                    return false;
+            }
+
+            return true;
+        }
+
+
+        public static bool Palindrome(string str)
+        {
+            if (str == null || str.Length < 2)
+                return true;
+
+            int i = str.Length / 2;
+
+            for(int x=0; x<=i-1; x++)
+            {
+                if (str[x] != str[str.Length - x-1])
+                    return false;
+
+            }
+
+            return true;
 
 
         }

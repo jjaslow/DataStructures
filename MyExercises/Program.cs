@@ -12,8 +12,8 @@ namespace MyExercises
         static void Main(string[] args)
         {
 
-
-            Console.WriteLine(StringManipulation.RemoveDupChar("jasjaonn"));
+            string xxx = "MADAM";
+            Console.WriteLine(StringManipulation.Palindrome(xxx));
             
             
 
