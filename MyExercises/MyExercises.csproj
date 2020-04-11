@@ -53,6 +53,7 @@
     <Compile Include="AVLTree.cs" />
     <Compile Include="BubbleSort.cs" />
     <Compile Include="Graph.cs" />
+    <Compile Include="HackerRank.cs" />
     <Compile Include="Heap.cs" />
     <Compile Include="JJBST.cs" />
     <Compile Include="jjHash.cs" />
