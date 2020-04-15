@@ -52,6 +52,7 @@
     <Compile Include="ArrayQueue.cs" />
     <Compile Include="AVLTree.cs" />
     <Compile Include="BubbleSort.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="HackerRank.cs" />
     <Compile Include="Heap.cs" />
@@ -70,6 +71,9 @@
     <Compile Include="WeightedGraph.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
