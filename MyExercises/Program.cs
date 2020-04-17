@@ -13,17 +13,17 @@ namespace MyExercises
     {
         static void Main(string[] args)
          {
-             
-
-            int[] a = new int[] {3,4,7,6,5 };
 
 
-            HackerRank.waiter(a, 1);
-   
+            int[] a = new int[] { 203, 204, 205, 206, 207, 208, 203, 204, 205, 206 };
+            int[] b = new int[] { 203, 204, 204, 205, 206, 207, 205, 208, 203, 206, 205, 206, 204,206 };
 
-            //HackerRank.buildString(4, 5, "jasonjason");
+            HackerRank.missingNumbers(a,b);
 
-            //Console.WriteLine(c);
+            Console.WriteLine("x");
+
+
+
 
 
             Console.ReadLine();

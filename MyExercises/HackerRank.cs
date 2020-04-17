@@ -3193,7 +3193,6 @@ namespace MyExercises
             for (int x = 0; x < number.Length; x++)
                 queueA[0].Push(number[x]);
 
-
             for(int iteration = 1; iteration<=q; iteration++)
             {
                 queueA[iteration] = new Stack<int>();  //queue A
@@ -3215,26 +3214,466 @@ namespace MyExercises
             for(int y=1; y<q+1; y++)
             {
                 while(queueB[y].Count>0)
-                {
                     resultsList.Add(queueB[y].Pop());
-                }
             }
 
             while (queueA[q].Count > 0)
-            {
                 resultsList.Add(queueA[q].Pop());
-            }
 
             return resultsList.ToArray();
         }
 
 
+        public static long largestRectangle(int[] h)          //  xxxxx
+        {
+            Stack<int> myStack = new Stack<int>();
+            myStack.Push(h[0]);
+
+            int minHeightInStack = h[0];
+            long maxSizeSoFar = h[0];
+
+            for(int x=1; x<h.Length; x++)
+            {
+                long currentSize = minHeightInStack * myStack.Count;
+
+                if(h[x] >= currentSize + minHeightInStack)
+                {
+                    myStack.Clear();
+                    myStack.Push(h[x]);
+                    minHeightInStack = h[x];
+                    maxSizeSoFar = h[x];
+                }
+                else if(h[x] < minHeightInStack)
+                {
+                    long newPotentialSize = (myStack.Count + 1) * h[x];
+                    if(newPotentialSize > currentSize)
+                    {
+                        maxSizeSoFar = newPotentialSize;
+                        minHeightInStack = h[x];
+                        myStack.Push(h[x]);
+                    }
+                    else
+                    {
+                        myStack.Clear();
+                        myStack.Push(h[x]);
+                        minHeightInStack = h[x];
+                    }
+                }
+                else
+                {
+                    myStack.Push(h[x]);
+                }
+
+            }
+
+            return 5;
+        }
+
+
+        /* for BoxOperations Main method
+        string[] nq = Console.ReadLine().Split(' ');
+        int n = Convert.ToInt32(nq[0]);
+        int q = Convert.ToInt32(nq[1]);
+
+        long[] box = Array.ConvertAll(Console.ReadLine().Split(' '), boxTemp => Convert.ToInt32(boxTemp))
+        ;
+        // Write Your Code Here
+        long[][] queries = new long[q][];
+            for (int x = 0; x < q; x++)
+            {
+                queries[x] = Array.ConvertAll(Console.ReadLine().Split(' '), nTemp => Convert.ToInt64(nTemp));
+            }
+
+           BoxOperations(box, queries); 
+         */
+        public static void BoxOperations(long[] boxes, long[][] queries)
+        {
+            long[] Ones = new long[boxes.Length];
+            long minAdjusted = -1;
+            long maxAdjusted = -1;
+            long res;
+
+            for(long x =0; x<queries.Length; x++)
+            {
+                long queryType = queries[x][0];
+                switch (queryType)
+                {
+                    case 1:
+                        Ones[queries[x][1]] += queries[x][3];
+                        if (queries[x][2] + 1 != boxes.Length)
+                            Ones[queries[x][2] + 1] -= queries[x][3];
+                        else
+                            queries[x][2]--;
+
+                        //track range of adjusted values, needed to do query 2s
+                        if (minAdjusted == -1)
+                        {
+                            minAdjusted = queries[x][1];
+                            maxAdjusted = queries[x][2] + 1;
+                        }
+                        else
+                        {
+                            if (queries[x][1] < minAdjusted)
+                                minAdjusted = queries[x][1];
+                            if (queries[x][2] > maxAdjusted+1)
+                                maxAdjusted = queries[x][2]+1;
+                        }
+                        break;
+                    case 2:
+                        if(minAdjusted!=-1)
+                        {
+                            UpdateBoxArray(boxes, Ones, minAdjusted, maxAdjusted);
+                            minAdjusted = -1; //reset ranges to un adjusted values
+                            maxAdjusted = -1;
+                            Array.Clear(Ones, 0, Ones.Length);
+                        }
+                        FloorBoxArray(boxes, queries[x][3], queries[x][1], queries[x][2]);
+                        break;
+                    case 3:
+                        if (minAdjusted != -1)
+                        {
+                            UpdateBoxArray(boxes, Ones, minAdjusted, maxAdjusted);
+                            minAdjusted = -1; //reset ranges to un adjusted values
+                            maxAdjusted = -1;
+                            Array.Clear(Ones, 0, Ones.Length);
+                        }
+                        res = boxes.Skip((int)queries[x][1]).Take((int)queries[x][2] - (int)queries[x][1]+1).Min();
+                        Console.WriteLine(res);
+                        break;
+                    case 4:
+                        if (minAdjusted != -1)
+                        {
+                            UpdateBoxArray(boxes, Ones, minAdjusted, maxAdjusted);
+                            minAdjusted = -1; //reset ranges to un adjusted values
+                            maxAdjusted = -1;
+                            Array.Clear(Ones, 0, Ones.Length);
+                        }
+                        res = boxes.Skip((int)queries[x][1]).Take((int)queries[x][2] - (int)queries[x][1]+1).Sum();
+                        Console.WriteLine(res);
+                        break;
+                }
+            }
+        }
+
+        private static void UpdateBoxArray(long[] boxes, long[]Ones, long min, long max)
+        {
+            boxes[min] += Ones[min];
+            for(long x = min+1; x<=max; x++)
+            {
+                Ones[x] = Ones[x - 1] + Ones[ x];
+                boxes[x] += Ones[x];
+            }
+        }
+
+        private static void FloorBoxArray(long[] boxes, long d, long min, long max)
+        {
+            for (long x = min; x <= max; x++)
+            {
+                boxes[x] = (long)Math.Floor((decimal)boxes[x] / d);
+            }
+        }
+
+
+        public static int restaurant(int l, int b)
+        {
+            List<int> lList = new List<int>();
+            List<int> bList = new List<int>();
+
+            for(int x=1; x <= l / x; x++)
+            {
+                if(l/x == ((decimal)l / (decimal)x))
+                {
+                    lList.Add(x);
+                    if(x!=l/x)
+                        lList.Add(l / x);
+                }
+            }
+
+            for (int x = 1; x <= b / x; x++)
+            {
+                if (b / x == ((decimal)b / (decimal)x))
+                {
+                    bList.Add(x);
+                    if (x != b / x)
+                        bList.Add(b / x);
+                }
+            }
+
+            lList.Sort();
+            bList.Sort();
+
+            int GCF = lList.Where(i => bList.Contains(i)).Max();
+
+            return l / GCF * b / GCF;
+        }
+
+
+        static int[] jimOrders(int[][] orders)
+        {
+            Dictionary<int, List<int>> customerTimesDict = new Dictionary<int, List<int>>();
+
+            for (int x = 0; x<orders.Length; x++)
+            {
+                int orderTime = orders[x][0] + orders[x][1];
+
+                if (customerTimesDict.ContainsKey(orderTime))
+                    customerTimesDict[orderTime].Add(x+1);
+                else
+                    customerTimesDict.Add(orderTime, new List<int>() {x+1 });
+            }
+
+            int[] times = customerTimesDict.Keys.ToArray();
+            Array.Sort(times);
+
+            List<int> results = new List<int>();
+
+            foreach(int time in times)
+            {
+                results.AddRange(customerTimesDict[time]);
+            }
+
+            return results.ToArray();
+        }
+
+
+        public static int toys(int[] w)
+        {
+            var myHash = new HashSet<int>();
+
+            foreach (int i in w)
+                myHash.Add(i);
+
+            int[] myArr = myHash.ToArray();
+            Array.Sort(myArr);
+
+            int result = 0;
+            int index = 0;
+
+            do
+            {
+                int weight = myArr[index];
+                result++;
+                while (index + 1 < myArr.Length && myArr[index + 1] <= weight + 4)
+                    index++;
+                index++;
+            } 
+            while (index<myArr.Length);
+
+            return result;
+        }
+
+
+        public static void decentNumber(int n)
+        {
+            int fives = n / 3;                       //3      //  2
+            int threesMod = (n-(fives*3)) % 5;       //2    //
+
+            while(threesMod != 0)
+            {
+                fives--;
+                threesMod = (n - (fives * 3)) % 5;
+                if(fives<0)
+                {
+                    Console.WriteLine(-1);
+                    return;
+                }
+            }
+
+            threesMod = n - (fives * 3);
+
+            StringBuilder sb = new StringBuilder();
+            for(int x=0;x<fives;x++)
+                sb.Append("555");
+            for (int x = 0; x < threesMod; x++)
+                sb.Append("3");
+
+            Console.WriteLine(sb.ToString());
+        }
+
+
+        static int[] closestNumbers(int[] arr)
+        {
+
+            Array.Sort(arr);
+            int smallestDifference = int.MaxValue;
+
+            List<int> results = new List<int>();
+
+            for(int x=0; x<arr.Length-1; x++)
+            {
+                if (arr[x + 1] - arr[x] < smallestDifference)
+                {
+                    results.Clear();
+                    results.Add(arr[x]);
+                    results.Add(arr[x + 1]);
+                    smallestDifference = arr[x + 1] - arr[x];
+                }
+                else if (arr[x + 1] - arr[x] == smallestDifference)
+                {
+                    results.Add(arr[x]);
+                    results.Add(arr[x + 1]);
+                }
+            }
+
+            return results.ToArray();
+
+        }
+
+
+        public static int beautifulPairs(int[] A, int[] B)
+        {
+            Dictionary<int, int> dictA = new Dictionary<int, int>();    //number, count
+ 
+
+            foreach(int i in A)
+            {
+                if (dictA.ContainsKey(i))
+                    dictA[i]++;
+                else
+                    dictA.Add(i, 1);
+            }
+
+            int pairs = 0;
+
+            foreach(int i in B)
+            {
+                if(dictA.ContainsKey(i) && dictA[i]>0)
+                {
+                    dictA[i]--;
+                    pairs++;
+                }
+            }
+
+            int qq = dictA.Sum(i => i.Value);
+
+            if ( qq > 0)
+                return pairs + 1;
+            else
+                return pairs-1;
+        }
+
+        public static string funnyString(string s)
+        {
+            int[] a = new int[s.Length-1];
+            int[] b = new int[s.Length-1];
+
+            for(int x=0; x<s.Length-1; x++)
+            {
+                a[x] = Math.Abs(s[x+1] - s[x]);
+                b[x] = Math.Abs(s[x + 1] - s[x]);
+            }
+
+            Array.Reverse(b);
+
+            for(int x=0; x<a.Length; x++)
+            {
+                if (a[x] != b[x])
+                    return "Not Funny";
+            }
+            return "Funny";
+        }
 
 
 
+        static int findMedian(int[] arr)
+        {
+            Array.Sort(arr);
+            int len = arr.Length;
+            int index = len / 2;
+            return arr[index];
+        }
+
+        static int[] countingSort(int[] arr)
+        {
+            int[] counter = new int[100];
+
+            foreach (int i in arr)
+                counter[i]++;
+
+            return counter;
+
+        }
+
+
+        public static int workbook(int n, int k, int[] arr)
+        {
+            int startingPage = 0;
+            int endingPage = 0;
+
+            int specialProblems = 0;
+
+            for(int x = 0; x<arr.Length; x++)
+            {
+                startingPage = endingPage+1;
+                endingPage += (int)Math.Ceiling((double)arr[x] / k);
+
+                for(int y = 1; y<=arr[x]; y++)
+                {
+                    if (y ==  (y-1)/k + startingPage)
+                        specialProblems++;
+                }
+            }
+            return specialProblems;
+        }
 
 
 
+        static string gameOfThrones(string s)
+        {
+            var myDict = new Dictionary<char, int>();
+
+            foreach (char ch in s)
+            {
+                if (myDict.ContainsKey(ch))
+                    myDict[ch]++;
+                else
+                    myDict.Add(ch, 1);
+            }
+
+            int odds = 0;
+            foreach(KeyValuePair<char, int> kvp in myDict)
+            {
+                if (kvp.Value % 2 != 0)
+                    odds++;
+            }
+
+            if (odds <= 1)
+                return "YES";
+            else
+                return "NO";
+        }
+
+
+        public static int[] missingNumbers(int[] arr, int[] brr)   //brr original
+        {
+            var myDict = new Dictionary<int, int>();
+            foreach(int i in brr)
+            {
+                if (myDict.ContainsKey(i))
+                    myDict[i]++;
+                else
+                    myDict.Add(i, 1);
+            }
+
+            foreach (int i in arr)
+            {
+                myDict[i]--;
+                if (myDict[i] == 0)
+                    myDict.Remove(i);
+            }
+
+            var resultsList = new List<int>();
+
+            foreach (KeyValuePair<int,int> kvp in myDict)
+            {
+                resultsList.Add(kvp.Key);
+
+            }
+
+            int[] results = resultsList.ToArray();
+            Array.Sort(results);
+            return results;
+        }
 
 
 
