@@ -3677,6 +3677,275 @@ namespace MyExercises
 
 
 
+        public static void MeanMedianMode()
+        {
+            System.IO.TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+            int n = int.Parse(Console.ReadLine());
+            int[] data = Array.ConvertAll(Console.ReadLine().Split(' '), inputTemp => Convert.ToInt32(inputTemp));
+            Array.Sort(data);
+
+            //mean
+            decimal mean = (decimal)data.Sum(i => i) / (decimal)n;
+            textWriter.WriteLine(Math.Round(mean, 1));    
+
+            //median
+            if (n%2==1)                     //odd
+                textWriter.WriteLine((decimal)data[data.Length / 2]);     
+            else
+            {                               //even
+                int a = data[data.Length / 2];
+                int b = data[(data.Length / 2) - 1];
+                decimal median = (decimal)(((decimal)a + (decimal)b) / 2);
+                textWriter.WriteLine(Math.Round(median, 1));
+            }
+
+
+            //mode
+            var myDict = new Dictionary<int, int>();
+            foreach(int i in data)
+            {
+                if (myDict.ContainsKey(i))
+                    myDict[i]++;
+                else
+                    myDict.Add(i, 1);
+            }
+
+            int maxCount = myDict.Max(i => i.Value);
+            int mode = myDict.Where(i => i.Value == maxCount).OrderBy(i => i.Key).First().Key;
+            
+            //int mode = myDict.OrderBy(i => i.Value).OrderBy(i => i.Key).First().Key;
+
+            textWriter.WriteLine(mode);
+
+            textWriter.Flush();
+            textWriter.Close();
+        }   //stats 1
+
+
+        public static void WeightedMean()
+        {
+            System.IO.TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+            int n = int.Parse(Console.ReadLine());
+            int[] values = Array.ConvertAll(Console.ReadLine().Split(' '), inputTemp => Convert.ToInt32(inputTemp));
+            int[] weights = Array.ConvertAll(Console.ReadLine().Split(' '), inputTemp => Convert.ToInt32(inputTemp));
+
+            decimal sums = 0;
+            for(int x=0; x<n; x++)
+            {
+                sums += ((decimal)values[x] * (decimal)weights[x]);
+            }
+
+            decimal totalWeights = weights.Sum();
+
+            decimal result = sums / totalWeights;
+
+
+            textWriter.WriteLine("{0:0.0}", Math.Round(result, 1));
+
+            textWriter.Flush();
+            textWriter.Close();
+        }   //stats 2
+
+
+
+        static int handshake(int n)
+        {
+            n -= 1;
+            int total = 0;
+
+            while (n>0)
+            {
+                total += n;
+                n--;
+            }
+            return total;
+        }
+
+
+        public static void Quartiles()
+        {
+            //System.IO.TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+            int n = int.Parse(Console.ReadLine());
+            int[] values = Array.ConvertAll(Console.ReadLine().Split(' '), inputTemp => Convert.ToInt32(inputTemp));
+            Array.Sort(values);
+
+            decimal Q1 = 0, Q2 = 0, Q3 = 0;
+            int topOfA = 0, bottomOfB = 0;
+            int a, b;
+
+            //Q2
+            if (n % 2 == 1)                     //odd
+            {
+                Q2 = (decimal)values[values.Length / 2];
+                topOfA = (values.Length / 2) - 1;
+                bottomOfB = (values.Length / 2) + 1;
+            }
+            else
+            {                               //even
+                topOfA = (values.Length / 2)-1;
+                bottomOfB = (values.Length / 2);
+                a = values[values.Length / 2];
+                b = values[(values.Length / 2) - 1];
+                Q2 = (decimal)(((decimal)a + (decimal)b) / 2);
+            }
+
+
+            //Q1
+            if ((topOfA-1) % 2 == 1)                     //odd
+            {
+                Q1 = (decimal)values[topOfA / 2];
+            }
+            else
+            {                               //even
+                a = values[topOfA / 2];
+                b = values[(topOfA / 2) + 1];
+                Q1 = (decimal)(((decimal)a + (decimal)b) / 2);
+            }
+
+
+            //Q3
+            if ((n-bottomOfB) % 2 == 1)                     //odd
+            {
+                Q3 = (decimal)values[(values.Length+bottomOfB) / 2];
+            }
+            else
+            {                               //even
+                a = values[(values.Length + bottomOfB-1) / 2];
+                b = values[((values.Length + bottomOfB) / 2)];
+                Q3 = (decimal)(((decimal)a + (decimal)b) / 2);
+            }
+
+            //textWriter.WriteLine(Q1);
+            //textWriter.WriteLine(Q2);
+            //textWriter.WriteLine(Q3);
+
+            //textWriter.Flush();
+            //textWriter.Close();
+        }   //stats 3
+
+
+
+        static int gameWithCells(int n, int m)
+        {
+            int x = (n + n % 2) * (m + m % 2) / 4;
+            return x;
+        }
+
+
+        public static void InterQuartiles()
+        {
+            //System.IO.TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+            int n = int.Parse(Console.ReadLine());
+            int[] rawData = Array.ConvertAll(Console.ReadLine().Split(' '), inputTemp => Convert.ToInt32(inputTemp));
+            int[] frequencies = Array.ConvertAll(Console.ReadLine().Split(' '), inputTemp => Convert.ToInt32(inputTemp));
+
+            List<int> valuesList = new List<int>();
+            for(int x=0;x<n; x++)
+            {
+                for(int y=0; y<frequencies[x];y++)
+                {
+                    valuesList.Add(rawData[x]);
+                }
+            }
+
+            int[] values = valuesList.ToArray();
+            Array.Sort(values);
+
+            decimal Q1 = 0, Q2 = 0, Q3 = 0;
+            int topOfA = 0, bottomOfB = 0;
+            int a, b;
+
+            //Q2
+            if (n % 2 == 1)                     //odd
+            {
+                Q2 = (decimal)values[values.Length / 2];
+                topOfA = (values.Length / 2) - 1;
+                bottomOfB = (values.Length / 2) + 1;
+            }
+            else
+            {                               //even
+                topOfA = (values.Length / 2) - 1;
+                bottomOfB = (values.Length / 2);
+                a = values[values.Length / 2];
+                b = values[(values.Length / 2) - 1];
+                Q2 = (decimal)(((decimal)a + (decimal)b) / 2);
+            }
+
+
+            //Q1
+            if ((topOfA - 1) % 2 == 1)                     //odd
+            {
+                Q1 = (decimal)values[topOfA / 2];
+            }
+            else
+            {                               //even
+                a = values[topOfA / 2];
+                b = values[(topOfA / 2) + 1];
+                Q1 = (decimal)(((decimal)a + (decimal)b) / 2);
+            }
+
+
+            //Q3
+            if ((n - bottomOfB) % 2 == 1)                     //odd
+            {
+                Q3 = (decimal)values[(values.Length + bottomOfB) / 2];
+            }
+            else
+            {                               //even
+                a = values[(values.Length + bottomOfB - 1) / 2];
+                b = values[((values.Length + bottomOfB) / 2)];
+                Q3 = (decimal)(((decimal)a + (decimal)b) / 2);
+            }
+
+            decimal answer = Q3 - Q1;
+            //textWriter.WriteLine("{0:0.0}", Math.Round(answer, 1));
+
+            //textWriter.Flush();
+            //textWriter.Close();
+        }   //stats 4
+
+
+
+        public static void StarndardDeviation()     //stats 5
+        {
+            System.IO.TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+            int n = int.Parse(Console.ReadLine());
+            int[] data = Array.ConvertAll(Console.ReadLine().Split(' '), inputTemp => Convert.ToInt32(inputTemp));
+            Array.Sort(data);
+
+            //mean
+            double mean = (double)data.Sum(i => i) / (double)n;
+
+            double result = 0;
+
+            foreach (int i in data)
+            {
+                result += (i - mean) * (i - mean);
+            }
+
+            result = Math.Sqrt(result / n);
+
+            textWriter.WriteLine("{0:0.0}", Math.Round(result, 1));
+
+            textWriter.Flush();
+            textWriter.Close();
+        }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
