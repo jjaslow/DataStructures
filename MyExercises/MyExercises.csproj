@@ -56,6 +56,7 @@
     <Compile Include="Graph.cs" />
     <Compile Include="HackerRank.cs" />
     <Compile Include="Heap.cs" />
+    <Compile Include="IVCake.cs" />
     <Compile Include="JJBST.cs" />
     <Compile Include="jjHash.cs" />
     <Compile Include="jjStack.cs" />

@@ -3938,18 +3938,413 @@ namespace MyExercises
 
 
 
+        public static int primeCount(long n)
+        {
+            int[] primeNumbers = new int[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479 };
+
+            if (n == 0 || n == 1)
+                return 0;
+
+            int count = 0;
+            ulong multiples = 1;
+
+            while(multiples<=(ulong)n)
+            {
+                multiples *= (ulong)primeNumbers[count++];
+            }
+
+            return count - 1;
+        }
+
+
+        static int connectingTowns(int n, int[] routes)
+        {
+            int result = 1;
+            foreach (int i in routes)
+            {
+                result = (result *i) % 1234567;
+            }
+                
+
+            return result;
+        }
+
+
+
+        public static long strangeGrid(long r, long c)
+        {
+            r--;
+            c--;
+
+            long result = (r * 5) - ((r%2)*5);          //((r - 1) * 5) + ((r - 1) % 2);
+            result += (c  % 5) * 2;
+            result += r % 2;
+
+            return result;
+        }
+
+
+
+        static long solve(long n, long m)
+        {
+
+            long larger = n > m ? n : m;
+            long smaller = n > m ? m : n;
+
+            long count = smaller - 1;
+            count += smaller * (larger - 1);
+
+            return count;
+        }
+
+
+        static long halloweenParty(int k)
+        {
+            long a = k / 2;
+            long b = k - a;
+            return a * b;
+        }
+
+
+        public static int solve(int x1, int y1, int x2, int y2)
+        {
+            double width = Math.Abs(x1 - x2);
+            double height = Math.Abs(y1 - y2);
+
+            double wh = (float)width/ (float)height;
+
+            int count = 0;
+
+            for(double x = height-1; x>0; x--)
+            {
+                width = Math.Round((x * wh),5);
+                if (width == (int)width)
+                    count++;
+            }
+            return count;
+        }
+
+
+        static int factorial(int n)
+        {
+            int result = 1;
+            for (int x = n; x > 1; x--)
+                result *= x;
+
+            return result;
+        }
+
+
+        public static void BinomialDistrubitionI()     //stats 6
+        {
+            System.IO.TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+            string[] nm = Console.ReadLine().Split(' ');
+            double a = Convert.ToDouble(nm[0]); //array length
+            double b = Convert.ToDouble(nm[1]); //array length
+
+
+            int n = 6;
+            double p = (a / (a + b));
+            double q = (b / (a + b));
+
+            double result = 0;
+
+            for (int x = 3; x <= n; x++)
+                result += (factorial(n) / (factorial(x) * factorial(n - x))) * Math.Pow(p, x) * Math.Pow(q, (n - x));
+
+            Console.WriteLine("{0:0.000}", result);
+            textWriter.WriteLine("{0:0.000}", result);
+            textWriter.Flush();
+            textWriter.Close();
+
+        }
+
+
+        public static void BinomialDistrubitionII()     //stats 7
+        {
+            //System.IO.TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+            //string[] nm = Console.ReadLine().Split(' ');
+            //double a = Convert.ToDouble(nm[0]); //array length
+            //double b = Convert.ToDouble(nm[1]); //array length
+
+
+            int n = 10;
+            double p = .12;
+            double q = .88;
+
+            double result = 0;
+
+            for (int x = 2; x >=0; x--)
+                result += (factorial(n) / (factorial(x) * factorial(n - x))) * Math.Pow(p, x) * Math.Pow(q, (n - x));
+
+            Console.WriteLine("{0:0.000}", result);
+           // textWriter.WriteLine("{0:0.000}", result);
+
+            /////
+            double result2 = 0;
+
+            for (int x = 2; x <= n; x++)
+                result2 += (factorial(n) / (factorial(x) * factorial(n - x))) * Math.Pow(p, x) * Math.Pow(q, (n - x));
+
+            Console.WriteLine("{0:0.000}", result2);
+           // textWriter.WriteLine("{0:0.000}", result2);
+
+
+
+            //textWriter.Flush();
+           // textWriter.Close();
+
+        }
 
 
 
 
+        public static void GeometricDistrubitionI()     //stats 8
+        {
+            System.IO.TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+            string[] nm = Console.ReadLine().Split(' ');
+            double a = Convert.ToDouble(nm[0]); //array length
+            double b = Convert.ToDouble(nm[1]); //array length
+            double n = Convert.ToDouble(Console.ReadLine());
+
+            double p = a/b;
+            double q = (b-a)/b;
+
+            double result = 0;
+
+            result = Math.Pow(q, (n - 1)) * p;
+
+            Console.WriteLine("{0:0.000}", result);
+            textWriter.WriteLine("{0:0.000}", result);
+
+         
+            textWriter.Flush();
+            textWriter.Close();
+
+        }
+
+
+
+        public static void GeometricDistrubitionII()     //stats 9
+        {
+            //System.IO.TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+            string[] nm = Console.ReadLine().Split(' ');
+            int a = Convert.ToInt32(nm[0]); //array length
+            int b = Convert.ToInt32(nm[1]); //array length
+            int n = Convert.ToInt32(Console.ReadLine());
+
+            double p = (double)a / (double)b;
+            double q = 1-p;
+
+            double result = 0;
+
+            for (int x = n; x > 0; x--)
+                result += Math.Pow(q, (x - 1)) * p;
+
+            Console.WriteLine("{0:0.000}", result);
+            // textWriter.WriteLine("{0:0.000}", result);
+            //textWriter.Flush();
+            // textWriter.Close();
+        }
 
 
 
 
+        public static int findStep(int n)           //Hired #2
+        {
+            if (n == 1 || n == 0)
+                return 1;
+            else if (n == 2)
+                return 2;
+
+            else
+                return findStep(n - 3) + findStep(n - 2) + findStep(n - 1);
+        }
+
+
+        public static long Solution(long[] prices)      //Hired #3
+        {
+            if (prices.Length == 0 || prices.Length == 1)
+                return 0;
+
+            long minPrice = prices[0];
+            long bestCase = long.MinValue;
+
+            for (int x = 1; x < prices.Length; x++)
+            {
+                long currentPrice = prices[x];
+
+                if (currentPrice - minPrice > bestCase)
+                {
+                    bestCase = currentPrice - minPrice;
+                }
+
+                if (currentPrice < minPrice)
+                    minPrice = currentPrice;
+            }
+            return bestCase;
+
+
+        }
 
 
 
+        static int minimumAbsoluteDifference(int[] arr)
+        {
+            int minDifference = int.MaxValue;
 
+            Array.Sort(arr);
+            for (int x = 1; x < arr.Length; x++)
+            {
+                if (Math.Abs(arr[x] - arr[x - 1]) < minDifference)
+                    minDifference = Math.Abs(arr[x] - arr[x - 1]);
+            }
+
+
+
+            return minDifference;
+        }
+
+
+        static string pangrams(string s)
+        {
+            s= s.ToLower();
+            var myHash = new HashSet<char>();
+            foreach (char c in s)
+            {
+                if(c!=' ')
+                    myHash.Add(c);
+            } 
+
+            if (myHash.Count == 26)
+                return "pangram";
+            else
+                return "not pangram";
+        }
+
+
+        public static string[] weightedUniformStrings(string s, int[] queries)
+        {
+            var myHash = new HashSet<int> {(int)s[0] - 96};
+
+            char lastchar = s[0];
+            int charCount = 1;
+
+            for (int x=1;x<s.Length; x++)
+            {
+                char currentChar = s[x];
+                int currentCharValue = (int)currentChar - 96;
+
+                if (currentChar == lastchar)
+                {
+                    charCount++;
+                    myHash.Add(currentCharValue*charCount);
+                }
+                else
+                {
+                    charCount = 1;
+                    myHash.Add(currentCharValue);
+                }
+                lastchar = s[x];
+            }
+
+            string[] result = new string[queries.Length];
+
+            for(int x = 0; x<queries.Length; x++)
+            {
+                if (myHash.Contains(queries[x]))
+                    result[x] = "Yes";
+                else
+                    result[x] = "No";
+            }
+            return result;
+        }
+
+
+
+        public static void PoissonI()     //stats 10
+        {
+            System.IO.TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+            double l = Convert.ToDouble(Console.ReadLine());
+            double k = Convert.ToDouble(Console.ReadLine());
+            const double e = 2.71828;
+
+            double result = Math.Pow(l, k) * Math.Pow(e, -l) / factorial((int)k);
+
+            //for (int x = n; x > 0; x--)
+            //    result += Math.Pow(q, (x - 1)) * p;
+
+            Console.WriteLine("{0:0.000}", result);
+            textWriter.WriteLine("{0:0.000}", result);
+            textWriter.Flush();
+            textWriter.Close();
+        }
+
+
+        public static void PoissonII()     //stats 11
+        {
+            //System.IO.TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+            double lA = Convert.ToDouble(Console.ReadLine());
+            double lB = Convert.ToDouble(Console.ReadLine());
+
+            double A = lA + Math.Pow(lA, 2);
+            double B = lB + Math.Pow(lB, 2);
+
+            double finalResultA = 160 + (40 * A);
+            double finalResultB = 128 + (40 * B);
+
+            Console.WriteLine("{0:0.000}", finalResultA);
+            //textWriter.WriteLine("{0:0.000}", finalResultA);
+
+            Console.WriteLine("{0:0.000}", finalResultB);
+            //textWriter.WriteLine("{0:0.000}", finalResultB);
+
+
+            //textWriter.Flush();
+            //textWriter.Close();
+        }
+
+
+
+        static int luckBalance(int k, int[][] contests)
+        {
+            int luckBalance = 0;
+            List<int> importantContests = new List<int>();
+
+            for(int x=0; x<contests.Length; x++)
+            {
+                int luck = contests[x][0];
+                int importance = contests[x][1];
+
+                if (importance == 0)
+                    luckBalance += luck;
+                else
+                {
+                    importantContests.Add(luck);
+                }
+            }
+
+            importantContests.Sort();
+
+            for(int x=0; x<importantContests.Count; x++)
+            {
+                if (x < importantContests.Count - k)
+                    luckBalance -= importantContests[x];
+                else
+                    luckBalance += importantContests[x];
+            }
+            return luckBalance;
+        }
+
+
+
+   
 
 
 

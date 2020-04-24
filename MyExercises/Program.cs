@@ -15,12 +15,13 @@ namespace MyExercises
          {
 
 
-            int[] a = new int[] { 203, 204, 205, 206, 207, 208, 203, 204, 205, 206 };
-            int[] b = new int[] { 203, 204, 204, 205, 206, 207, 205, 208, 203, 206, 205, 206, 204,206 };
+            int[] a = { 2, 3, 4, 5, 6, 7, 8};
+            int[] b = { 1,7 };
 
-            HackerRank.InterQuartiles();
 
-            Console.WriteLine("x");
+            IVCake.GetProductsOfAllIntsExceptAtIndex(a);
+
+            Console.WriteLine("xx");
 
 
 
