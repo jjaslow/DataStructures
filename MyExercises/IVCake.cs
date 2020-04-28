@@ -340,7 +340,7 @@ namespace MyExercises
         }
 
 
-        /* SORTING. SEARCHING (BINARY SEARCH) //////////////////////////////////////////////////////////////////////////////
+        /* SORTING, SEARCHING (BINARY SEARCH) //////////////////////////////////////////////////////////////////////////////
         */ //////////////////////////////////////////////////////////////////////////////////////////////////
         public static int FindRotationPoint(String[] words)
         {
@@ -652,7 +652,6 @@ namespace MyExercises
 
         /* STACK & QUEUE ///////////////////////////////////////////////////////////////////////////////////////
 
-        
         Stack is good for string parsing (bracket validation)
 
         */ //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -724,12 +723,170 @@ namespace MyExercises
             }
         }
 
+        public static int GetClosingParen(string sentence, int openingParenIndex)
+        {
+            // Find the position of the matching closing parenthesis
+            Stack<char> myStack = new Stack<char>();
+            for(int x = openingParenIndex; x<sentence.Length; x++)
+            {
+                char c = sentence[x];
+                
+                if(c=='(')
+                    myStack.Push(c);
+                else if(c==')')
+                {
+                    if (myStack.Count == 0)
+                        throw new System.ArgumentException("stack is empty");
+                    else if (myStack.Peek() == '(')
+                    {
+                        myStack.Pop();
+                        if (myStack.Count == 0)
+                            return x;
+                    }
+                    else
+                        throw new System.ArgumentException("mismatch");
+                }
+            }
+            if (myStack.Count > 0)
+                throw new System.ArgumentException("item still left in stack");
+            return 0;
+        }
 
 
+        public static bool IsValid(string code)
+        {
+            char[] openers = new char[] { '(', '{', '[' };
+            char[] closers = new char[] { ')', '}', ']' };
+
+            Stack<char> myStack = new Stack<char>();
+
+            for (int x = 0; x < code.Length; x++)
+            {
+                char c = code[x];
+
+                if (openers.Contains(c))
+                    myStack.Push(c);
+                else if (closers.Contains(c))
+                {
+                    if (myStack.Count == 0)
+                        return false;
+
+                    char match = myStack.Pop();
+                    int matchIndex = Array.IndexOf(openers, match); 
+                    int thisIndex = Array.IndexOf(closers, c);
+
+                    if (matchIndex != thisIndex)
+                        return false;
+                }
+
+            }
+
+            if (myStack.Count > 0)
+                return false;
+            return true;
+        }
 
 
+        /* LINKED LIST ///////////////////////////////////////////////////////////////////////////////////////
+
+            can be singly or doubly linked.
+
+        */ //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+        public static void DeleteNode(LinkedListNode nodeToDelete)
+        {
+            // Delete the input node from the linked list
+
+            if(nodeToDelete.Next==null)
+            {
+                throw new System.InvalidOperationException();
+            }
+
+            LinkedListNode next = nodeToDelete.Next;
+
+            nodeToDelete.Value = nodeToDelete.Next.Value;
+            nodeToDelete.Next = next.Next;
+
+
+            next.Next = null;
+        }
+
+        public static bool ContainsCycle(LinkedListNode firstNode)
+        {
+            // Check if the linked list contains a cycle
+            if (firstNode == null || firstNode.Next == null || firstNode.Next.Next == null)
+                return false;
+
+            LinkedListNode slow = firstNode;
+            LinkedListNode fast = firstNode.Next;
+
+            while(fast!=null)
+            {
+                slow = slow.Next;
+
+                if (fast.Next == null)
+                    return false;
+                else
+                    fast = fast.Next.Next;
+
+                if (fast == slow)
+                    return true;
+            }
+            return false;
+        }
+
+        public static LinkedListNode Reverse(LinkedListNode headOfList)
+        {
+            if (headOfList == null)
+                return null;
+            if (headOfList.Next == null)
+                return headOfList;
+
+            LinkedListNode A = headOfList;
+            LinkedListNode B = A.Next;
+            LinkedListNode C;
+
+            while (B!=null || B.Next != null)
+            {
+                C = B.Next;
+                B.Next = A;
+
+                A = B;
+                B = C;
+            }
+
+            B.Next = A;
+            headOfList.Next = null;
+            return B;
+        }
+
+
+        public static LinkedListNode KthToLastNode(int k, LinkedListNode head)
+        {
+            if(k<1)
+                throw new System.ArgumentException("K must be > 1");
+
+            // Return the kth to last node in the linked list
+            LinkedListNode mainPointer = head;
+
+            for(int x=1; x<k; x++)
+            {
+                mainPointer = mainPointer.Next;
+                if (mainPointer == null)
+                    throw new System.ArgumentException("not enough items in list");
+            }
+
+            LinkedListNode secondPointer = head;
+
+            while(mainPointer.Next != null)
+            {
+                mainPointer = mainPointer.Next;
+                secondPointer = secondPointer.Next;
+            }
+
+            return secondPointer;
+        }
 
 
 
@@ -776,6 +933,18 @@ namespace MyExercises
         public void AddNeighbor(GraphNode neighbor)
         {
             Neighbors.Add(neighbor);
+        }
+    }
+
+    public class LinkedListNode
+    {
+        public int Value { get; set; }
+
+        public LinkedListNode Next { get; set; }
+
+        public LinkedListNode(int value)
+        {
+            Value = value;
         }
     }
 }
