@@ -8,32 +8,39 @@ using System.Numerics;
 
 namespace MyExercises
 {
-
     static class Program
     {
         static void Main(string[] args)
          {
+            
 
+            int x = IVCake.FibIterative(10);
 
-            int[] a = { 2, 3, 4, 5, 6, 7, 8};
-            int[] b = { 1,7 };
-
-
-            IVCake.GetProductsOfAllIntsExceptAtIndex(a);
-
+            Console.WriteLine("");
             Console.WriteLine("xx");
-
-
-
-
-
             Console.ReadLine();
             
         }
 
 
+        static string[] GetColors()
+        {
+            return new string[] { "Red", "Green", "Blue", "Orange", "Yellow", "White" };
+        }
 
-       
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

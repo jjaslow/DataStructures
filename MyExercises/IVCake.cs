@@ -11,13 +11,13 @@ namespace MyExercises
 {
     public static class IVCake
     {
-        /*ARRAYS
+        /* ARRAYS //////////////////////////////////////////////////////////////////////////////////////////////////
 
             We started off trying to solve the problem in one pass, and we noticed that it wouldn't work. try sorting
 
             Solve a simpler version of the problem (in this case, reversing the characters instead of the words), 
             and see if that gets us closer to a solution for the original problem.
-        */
+        */ //////////////////////////////////////////////////////////////////////////////////////////////////
         public class Meeting
         {
             public int StartTime { get; set; }
@@ -35,7 +35,6 @@ namespace MyExercises
                 return $"({StartTime}, {EndTime})";
             }
         }
-
 
         public static void Reverse(char[] arrayOfChars)
         {
@@ -125,13 +124,14 @@ namespace MyExercises
         }
 
 
-        /*DICT & HASH
+        /* DICT & HASH //////////////////////////////////////////////////////////////////////////////////////////////////
 
             Using hash-based data structures, like dictionaries or hash sets, is so common in coding challenge solutions, it should always be your first thought. 
-            If hash, can we do the testing AS we build the hash instead of building a full hash and then testing on it later?
+            
+            Can we do the testing AS we build the hash instead of building a full hash and then testing on it later?
 
             Start with a brute force solution, look for repeat work in that solution, and modify it to only do that work once.
-        */
+        */ //////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool CanTwoMoviesFillFlight(int[] movieLengths, int flightLength)
         {
             var movieDict = new Dictionary<int, int>();
@@ -227,7 +227,7 @@ namespace MyExercises
         }
 
 
-        /*GREEDY
+        /* GREEDY //////////////////////////////////////////////////////////////////////////////////////////////////
 
             Greedy approaches are great because they're fast (usually just one pass through the input). But they don't work for every problem.
 
@@ -237,7 +237,7 @@ namespace MyExercises
 
             maybe cant solve in 1 pass, but maybe 2? start by coming up with a slow (but correct) brute force solution and trying to improve from there. We looked at what our solution actually calculated, step by
             step, and found some repeat work. 
-        */
+        */ //////////////////////////////////////////////////////////////////////////////////////////////////
         public static int GetMaxProfit(int[] stockPrices)
         {
             if (stockPrices.Length <= 1)
@@ -340,6 +340,389 @@ namespace MyExercises
         }
 
 
+        /* SORTING. SEARCHING (BINARY SEARCH) //////////////////////////////////////////////////////////////////////////////
+        */ //////////////////////////////////////////////////////////////////////////////////////////////////
+        public static int FindRotationPoint(String[] words)
+        {
+            // Find the rotation point in the array
+            int left = 0;
+            int right = words.Length-1;
+
+            int index = ((right+left) / 2)+1;
+            int charNumb = 0;
+
+            char currentChar = words[index][charNumb];
+            char charIndexZero = words[left][charNumb];
+
+            while (index>0 && currentChar > words[index - 1][charNumb])
+            {
+                while (currentChar == charIndexZero)
+                {
+                    charNumb++;
+                    currentChar = words[index][charNumb];
+                    charIndexZero = words[left][charNumb];
+                }
+                charNumb = 0;
+
+                if (currentChar > charIndexZero)   //go right
+                {
+                    left = index + 1;
+                }
+                else                            //go left
+                {
+                    right = index - 1;
+                }
+
+                index = (right + left) / 2;
+                currentChar = words[index][charNumb];
+            }
+
+            return index;
+        }
+
+
+
+        public static int FindRepeat(int[] numbers)
+        {
+            // Find a number that appears more than once
+            Array.Sort(numbers);
+
+            for (int x = 0; x < numbers.Length - 1; x++)
+            {
+                if(numbers[x]==numbers[x+1])
+                  return numbers[x];
+            }
+
+            return 0;
+        }
+
+
+        /* TREES //////////////////////////////////////////////////////////////////////////////////////////////////
+         
+           -number of nodes on each level 2x as we move down the tree (for a perfect / full BINARY SEARCH tree)
+           -number of nodes on the LAST level equals the sum of all the nodes on the other levels + 1 (for perfect tree)
+           -depth of tree is # of levels (root is level 0). COUNT the number of EDGES to leaf.
+           -height starts at leaf. = 1+ max(height(L), height(R))
+           -BST: left is smaller than node, right is larger than node
+           -O(log n) lookup for BST
+
+           GRAPHS //////////////////////////////////////////////////////////////////////////////////////////////////
+
+            -nodes / vertex are connected by EDGES
+            -useful for cases where things connect to other things
+            -most graph algorithms are O(n log n) or slower
+            -nodes are stored in an array (as a dictionary), usually as adjency lists (dictionary of node, and a linked list of connections)
+
+            Breadth-First Search: explore level by level starting at root. used to find shortest path and any other reachable node. requires more memory than DFS. Uses a queue (hit all 1-hops, then all 2-hops, and so on). Memory used is proportional to breadth of tree. O(N+M), where M = current node's neighbors (ie connections between the users).
+
+            Depth-First Search: go as deep as possible down 1 path before trying another. uses recursion. Uses a stack. Memory used is proportional to depth of tree.
+
+
+            -is there a path btw 2 nodes? run either search from one node and see if you reach the other.
+            -shortest path? BFS from 1 node and backtrack once you reach the second.
+
+            SIMPLIFY THE PROBLEM: solve for easier problem (eg. just check one hop away) and then adapt to solve for final problem.
+
+        */ //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        public static bool IsBalanced(BinaryTreeNode treeRoot)      //my function doesnt short circuit. not ideal...
+        {
+            var heightHash = new HashSet<int>();
+            GetDepth(treeRoot, 0, heightHash);
+
+            if (heightHash.Count > 2)
+                return false;
+            else if (heightHash.Max() - heightHash.Min() > 1)
+                return false;
+            else
+                return true;
+        }
+
+
+        private static void GetDepth(BinaryTreeNode node, int depth, HashSet<int> heightHash)
+        {
+            if (node.Left == null && node.Right==null)
+            {
+                heightHash.Add(depth);
+                return;
+            }
+            else
+            {
+                if(node.Left!=null)
+                    GetDepth(node.Left, depth+1, heightHash);
+                if(node.Right!=null)
+                    GetDepth(node.Right, depth+1, heightHash);
+            }
+            return;
+        }
+
+
+        //not finished...not correct if largest node has a left subtree
+        public static int FindSecondLargest(BinaryTreeNode rootNode)
+        {
+            // Find the second largest item in the binary search tree
+            if(rootNode.Right==null)
+            {
+                if (rootNode.Left == null)
+                    throw new System.ArgumentException("need more than 1 node");
+                else
+                    return rootNode.Left.Value;
+            }
+
+            BinaryTreeNode currNode = rootNode;
+            Stack<int> nodeStack = new Stack<int>();
+
+            while (currNode.Right != null)
+            {
+                nodeStack.Push(currNode.Value);
+                currNode = currNode.Right;
+            }
+
+            if (currNode.Left != null)
+                return currNode.Left.Value;
+            else
+                return nodeStack.Pop();
+        }
+
+
+        public static void ColorGraph(GraphNode[] graph, String[] colors)
+        {
+            // Create a valid coloring for the graph
+            for(int x=0; x<graph.Length; x++)
+            {
+                GraphNode currNode = graph[x];
+                if(!currNode.HasColor)
+                {
+                    List<string> usedColors = new List<string>();
+                    usedColors = currNode.Neighbors.Where(node => node.HasColor).Select(node => node.Color).ToList();
+                    currNode.Color = colors.First(c => !usedColors.Contains(c));
+                }
+            }
+        }
+
+
+        public static string[] BfsGetPath(Dictionary<string, string[]> graph, string startNode, string endNode)
+        {
+            if (!graph.ContainsKey(startNode))
+            {
+                throw new ArgumentException("Start node not in graph", nameof(startNode));
+            }
+            if (!graph.ContainsKey(endNode))
+            {
+                throw new ArgumentException("End node not in graph", nameof(endNode));
+            }
+
+            var nodesToVisit = new Queue<string>();
+            nodesToVisit.Enqueue(startNode);
+
+            // Keep track of how we got to each node.
+            // We'll use this to reconstruct the shortest path at the end.
+            // We'll ALSO use this to keep track of which nodes we've already visited.
+            var howWeReachedNodes = new Dictionary<string, string>();
+            howWeReachedNodes.Add(startNode, null);
+
+            while (nodesToVisit.Count > 0)
+            {
+                var currentNode = nodesToVisit.Dequeue();
+
+                // Stop when we reach the end node
+                if (currentNode == endNode)
+                {
+                    return ReconstructPath(howWeReachedNodes, startNode, endNode);
+                }
+
+                foreach (var neighbor in graph[currentNode])
+                {
+                    if (!howWeReachedNodes.ContainsKey(neighbor))
+                    {
+                        nodesToVisit.Enqueue(neighbor);
+                        howWeReachedNodes.Add(neighbor, currentNode);
+                    }
+                }
+            }
+
+            // If we get here, then we never found the end node
+            // so there's NO path from startNode to endNode
+            return null;
+        }
+
+        private static string[] ReconstructPath(Dictionary<string, string> howWeReachedNodes, string startNode, string endNode)
+        {
+            var reversedShortestPath = new List<string>();
+
+            // Start from the end of the path and work backwards
+            var currentNode = endNode;
+
+            while (currentNode != null)
+            {
+                reversedShortestPath.Add(currentNode);
+                currentNode = howWeReachedNodes[currentNode];
+            }
+
+            // Reverse our path to get the right order
+            // by flipping it around, in place
+            reversedShortestPath.Reverse();
+            return reversedShortestPath.ToArray();
+        }
+
+
+
+        /* DYNAMIC PROGRAMMING & RECURSION ///////////////////////////////////////////////////////////////////////////
+
+            A problem has overlapping subproblems if finding its solution involves solving the same subproblem multiple times.
+
+            Memoization ensures that a method doesn't run for the same inputs more than once by keeping a record of the results for the given inputs 
+                (usually in a dictionary). Memoization is a common strategy for dynamic programming problems, which are problems where the solution 
+                is composed of solutions to the same problem with smaller inputs 
+           
+            Going bottom-up is a way to avoid recursion. Put simply, a bottom-up algorithm "starts from the beginning," 
+                while a recursive algorithm often "starts from the end and works backwards."
+
+            Going bottom-up is a common strategy for dynamic programming problems, 
+                which are problems where the solution is composed of solutions to the same problem with smaller inputs
+
+            recursive factorial starts at end:          n*factorial(n-1) ...
+            bottom up factorial starts at beginning:    while(result *= x+1) ...
+
+            With any recursive method, we just need a base case and a recursive case.
+
+        */ //////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public static ISet<string> GetPermutations(String inputString)
+        {
+            // Generate all permutations of the input string
+
+
+            return new HashSet<string>();
+        }
+
+
+        static Dictionary<int, int> memo = new Dictionary<int, int>();
+        public static int Fib(int n)
+        {
+            if (n == 1 || n == 0)
+                return n;
+
+            if (memo.ContainsKey(n))
+                return memo[n];
+            else
+            {
+                int result = Fib(n - 1) + Fib(n - 2);
+                memo.Add(n, result);
+                return result;
+            }           
+        }
+
+
+        public static int FibIterative(int n)
+        {
+            if (n == 0)
+                return 0;
+            if (n < 0)
+                throw new System.ArgumentException("need positive #");
+
+            int priorValue = 0;
+            int result = 1;
+            for(int x=2; x<=n; x++)
+            {
+                int temp = result;
+                result += priorValue;
+                priorValue = temp;
+            }
+            return result;
+        }
+
+
+
+        public static int ChangePossibilities(int amount, int[] denominations)
+        {
+            int count = 0;
+
+
+
+            return count;
+        }
+
+             //STILL HAVE LOTS TO LEARN AND DO HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+             /////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+        /* STACK & QUEUE ///////////////////////////////////////////////////////////////////////////////////////
+
+        
+        Stack is good for string parsing (bracket validation)
+
+        */ //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        public class MaxStack
+        {
+            int max;
+            
+            Stack<int> myStack = new Stack<int>();
+
+            public void Push(int item)
+            {
+                if (myStack.Count == 0)
+                    max = item;
+                else if (item > max)
+                    max = item;
+
+                myStack.Push(item);
+            }
+
+            public int Pop()
+            {
+                if(myStack.Count>0)
+                {
+                    int temp = myStack.Pop();
+                    if(temp==max)
+                    {
+                        max = myStack.Max();
+                    }
+                    return temp;
+                }
+                else
+                {
+                    throw new System.Exception("Stack is Empty");
+                }
+                
+            }
+
+            public int GetMax()
+            {
+                if (myStack.Count > 0)
+                    return max;
+                else
+                    throw new System.Exception("Stack is empty");
+            }
+        }
+
+
+        public class QueueTwoStacks
+        {
+            Stack<int> _inStack = new Stack<int>();
+            Stack<int> _outStack = new Stack<int>();
+
+            public void Enqueue(int item)
+            {
+                _inStack.Push(item);
+            }
+
+            public int Dequeue()
+            {
+                if(_outStack.Count==0)
+                {
+                    while (_inStack.Count > 0)
+                        _outStack.Push(_inStack.Pop());
+                }
+
+                return _outStack.Pop();
+            }
+        }
 
 
 
@@ -350,6 +733,50 @@ namespace MyExercises
 
 
 
+    }
+
+    public class BinaryTreeNode
+    {
+        public int Value { get; }
+        public BinaryTreeNode Left { get; private set; }
+        public BinaryTreeNode Right { get; private set; }
+
+        public BinaryTreeNode(int value)
+        {
+            Value = value;
+        }
+
+        public BinaryTreeNode InsertLeft(int leftValue)
+        {
+            Left = new BinaryTreeNode(leftValue);
+            return Left;
+        }
+
+        public BinaryTreeNode InsertRight(int rightValue)
+        {
+            Right = new BinaryTreeNode(rightValue);
+            return Right;
+        }
+    }
+
+
+    public class GraphNode
+    {
+        public string Label { get; }
+        public ISet<GraphNode> Neighbors { get; }
+        public string Color { get; set; }
+        public bool HasColor { get { return Color != null; } }
+
+        public GraphNode(string label)
+        {
+            Label = label;
+            Neighbors = new HashSet<GraphNode>();
+        }
+
+        public void AddNeighbor(GraphNode neighbor)
+        {
+            Neighbors.Add(neighbor);
+        }
     }
 }
 

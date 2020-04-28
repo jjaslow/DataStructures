@@ -4343,8 +4343,90 @@ namespace MyExercises
         }
 
 
+        public static void separateNumbers(string s)
+        {
+            if(s.Length<2)
+            {
+                Console.WriteLine("NO");
+                return;
+            }
 
-   
+            int digitCount = 1;
+            int index = 0;
+            int incrementBase = 0;   //add 1 if next number goes up a digit (999 -> 1000)
+            long currentNumber, nextNumber;
+            long successfulFirstNumber =0;
+            bool foundSucessfulFirstNumber = false;
+
+            while (index + digitCount + digitCount + incrementBase <= s.Length)
+            {
+                currentNumber = long.Parse(s.Substring(index, digitCount));
+                nextNumber = long.Parse(s.Substring(index + digitCount, digitCount+incrementBase));
+
+                while (nextNumber-1!=currentNumber)
+                {
+                    if (nextNumber * 10 == currentNumber + 1)
+                        incrementBase = 1;
+                    else
+                        digitCount++;
+
+                    if (index + digitCount + digitCount + incrementBase > s.Length)
+                    {
+                        Console.WriteLine("NO");
+                        return;
+                    }
+                        
+                    currentNumber = long.Parse(s.Substring(index, digitCount));
+                    nextNumber = long.Parse(s.Substring(index + digitCount, digitCount+incrementBase));
+                }
+
+                if(!foundSucessfulFirstNumber)
+                {
+                    successfulFirstNumber = currentNumber;
+                    foundSucessfulFirstNumber = true;
+                }
+                
+                index += digitCount;
+                digitCount += incrementBase;
+                incrementBase = 0;
+            }
+
+            Console.WriteLine("YES " + successfulFirstNumber);
+            return;
+        }
+
+
+        static int gemstones(string[] arr)
+        {
+            int numStones = arr.Length;
+            List<HashSet<char>> stones = new List<HashSet<char>>();
+            Dictionary<char, int> mineralCount = new Dictionary<char, int>();
+
+            for (int x=0; x< numStones; x++)
+            {
+                string s = arr[x];
+
+                stones.Add(new HashSet<char>());
+                foreach(char c in s)
+                {
+                    stones[x].Add(c);
+                }
+
+                foreach(char c in stones[x])
+                {
+                    if (mineralCount.ContainsKey(c))
+                        mineralCount[c]++;
+                    else
+                        mineralCount.Add(c, 1);
+
+                }
+            }
+
+            int result = mineralCount.Count(i => i.Value == numStones);
+            return result;
+        }
+
+
 
 
 
