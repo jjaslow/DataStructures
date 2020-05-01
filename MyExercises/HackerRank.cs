@@ -4427,6 +4427,61 @@ namespace MyExercises
         }
 
 
+        //HackerRank intermediate quiz --- #2)
+        public static int sortedSum(List<int> a)
+        {
+
+            a.Sort();
+
+            int result = 1;
+            const int MODNUM = 1000000007;
+
+            for (int x=1; x<=a.Count; x++)
+            {
+                int nextNumb = a[x - 1] * x;
+                result = ((result % MODNUM) + (nextNumb % MODNUM)) % MODNUM;
+           
+            }
+
+            return result;
+        }
+
+        public static long taskOfPairing(List<long> freq)       //task of pairing - dumbells in pairs
+        {
+            long count = 0;
+            Dictionary<long, long> myDict = new Dictionary<long, long>();
+
+            for(int i = 0; i<freq.Count; i++)
+            {
+                int weight = i + 1;
+                long amount = freq[i];
+
+
+                long pairs = amount / 2;
+                count += pairs;
+                amount = amount % 2;
+
+
+
+                if (myDict.ContainsKey(weight - 1) && amount>0)
+                {
+                    count++;
+                    myDict.Remove(weight-1);
+                }
+                else if(amount>0)
+                        myDict.Add(weight, 1);
+
+            }
+            return count;
+        }
+
+
+
+
+
+
+
+
 
 
 

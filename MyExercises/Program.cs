@@ -12,9 +12,13 @@ namespace MyExercises
     {
         static void Main(string[] args)
          {
-            
 
-            int x = IVCake.FibIterative(10);
+            //List<int> a = new List<int> { 9,5,8};
+            //int x = HackerRank.sortedSum(a);
+
+
+            List<long> freq = new List<long> {3,5,4,3 };
+            long cc = HackerRank.taskOfPairing(freq);
 
             Console.WriteLine("");
             Console.WriteLine("xx");

@@ -62,7 +62,6 @@
     <Compile Include="jjStack.cs" />
     <Compile Include="jjArray.cs" />
     <Compile Include="List.cs" />
-    <Compile Include="misc.cs" />
     <Compile Include="PriorityQueue.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
