@@ -2041,7 +2041,7 @@ namespace MyExercises
 
         }
 
-        class EditorFunctions
+        class EditorFunctions       //EditorState
         {
             public int Type { get; private set; }
             public String Words { get; private set; }
@@ -2490,7 +2490,7 @@ namespace MyExercises
             }
             Console.WriteLine("Array is sorted in " + count + " swaps.");
             Console.WriteLine("First Element: " + a[0]);
-            Console.WriteLine("Last Element: " + a[a.Length-1]);
+            Console.WriteLine("Last Element: " + a[a.Length - 1]);
 
         }
 
@@ -2501,7 +2501,7 @@ namespace MyExercises
             int gifts = 0;
             int totalSpent = 0;
 
-            for(gifts=0; gifts< prices.Length; gifts++ )
+            for (gifts = 0; gifts < prices.Length; gifts++)
             {
                 if (totalSpent + prices[gifts] > k)
                     return gifts;
@@ -2520,7 +2520,7 @@ namespace MyExercises
 
             int count = 0;
 
-            foreach(char x in a)
+            foreach (char x in a)
             {
                 if (dictA.ContainsKey(x))
                     dictA[x]++;
@@ -2550,7 +2550,7 @@ namespace MyExercises
         {
             int count = 0;
 
-            for (int i=0; i<s.Length-1; i++)
+            for (int i = 0; i < s.Length - 1; i++)
             {
                 if (s[i] == s[i + 1])
                     count++;
@@ -2585,10 +2585,10 @@ namespace MyExercises
                 return "YES";
             else if (countDict.Count > 2)
                 return "NO";
-            else if (countDict.Values.Where(i=>i==1).Count() ==1)  //AND diff between keys ==1
+            else if (countDict.Values.Where(i => i == 1).Count() == 1)  //AND diff between keys ==1
             {
                 int[] keys = countDict.Keys.ToArray();
-                if ((keys[0] == 1 && countDict[0]==1)|| (keys[1] == 1 && countDict[1] == 1))
+                if ((keys[0] == 1 && countDict[0] == 1) || (keys[1] == 1 && countDict[1] == 1))
                     return "YES";
                 else if (Math.Abs(keys[0] - keys[1]) > 1)
                     return "NO";
@@ -2608,7 +2608,7 @@ namespace MyExercises
             int x = 0;
             int size = A.Length;
 
-            while(x<size)
+            while (x < size)
             {
                 if (A[x] + B[size - 1 - x] < k)
                     return "NO";
@@ -2631,7 +2631,7 @@ namespace MyExercises
 
             int lastCharInt;
 
-            for (int i=1; i<n; i++)
+            for (int i = 1; i < n; i++)
             {
                 currentChar = s[i].ToString();
 
@@ -2646,13 +2646,13 @@ namespace MyExercises
                     {
                         myStack.Push("2");
                     }
-                        
+
                 }
                 else                        //different char so check and update twoBack char
                 {
                     //string myPeek = myStack.Peek();
-                    
-                    if (twoBack==currentChar)
+
+                    if (twoBack == currentChar)
                     {
                         count += 1;
                         lastChar = currentChar;
@@ -2661,10 +2661,10 @@ namespace MyExercises
                     else
                     {
                         twoBack = lastChar;
-                        
+
 
                     }
-                    
+
                     myStack.Push(currentChar);
 
 
@@ -2674,7 +2674,7 @@ namespace MyExercises
 
 
             }
-            if(myStack.Count>0 && int.TryParse(myStack.Pop(), out lastCharInt))
+            if (myStack.Count > 0 && int.TryParse(myStack.Pop(), out lastCharInt))
             {
                 count += (lastCharInt * (lastCharInt + 1) / 2) - lastCharInt;
             }
@@ -2685,23 +2685,23 @@ namespace MyExercises
         public static long flippingBits(long n)
         {
             string final = "00000000000000000000000000000000";
-            string number = Convert.ToString(n,2);
+            string number = Convert.ToString(n, 2);
             int addZeroes = 32 - number.Length;
 
             final = String.Concat(final.Substring(0, addZeroes), number);
 
             StringBuilder sb = new StringBuilder();
-            foreach(char c in final)
+            foreach (char c in final)
             {
-                if(c=='0')
+                if (c == '0')
                     sb.Append(1);
                 else
                     sb.Append(0);
             }
             final = sb.ToString();
 
-            long result = Convert.ToInt64(final,2);
-                
+            long result = Convert.ToInt64(final, 2);
+
             Console.WriteLine(final);
             return result;
         }
@@ -2712,7 +2712,7 @@ namespace MyExercises
             long counter = 3;
             long timePassed = 0;
 
-            while(timePassed < t - counter)
+            while (timePassed < t - counter)
             {
                 roundsPassed++;
                 timePassed += counter;
@@ -2730,8 +2730,8 @@ namespace MyExercises
         {
             var myHash = new HashSet<int>();
             int stepsToTake = n - 1;
-            
-            for(int x=0;x<n;x++)
+
+            for (int x = 0; x < n; x++)
             {
                 int q = a * x;
                 int w = b * (stepsToTake - x);
@@ -2751,7 +2751,7 @@ namespace MyExercises
         {
             var myDict = new Dictionary<char, int>();
 
-            foreach(char c in b)
+            foreach (char c in b)
             {
                 if (myDict.ContainsKey(c))
                     myDict[c]++;
@@ -2759,14 +2759,14 @@ namespace MyExercises
                     myDict.Add(c, 1);
             }
 
-            if (myDict.Any(i => i.Value == 1 && i.Key!='_'))  //cant make singles happy
+            if (myDict.Any(i => i.Value == 1 && i.Key != '_'))  //cant make singles happy
                 return "NO";
 
             if (myDict.ContainsKey('_') && myDict['_'] >= 1)    //need X spaces to make happy (unless they are already happy)
                 return "YES";
 
             //else see if they are stuck but already happy
-            for(int x=1; x<b.Length-1; x++)
+            for (int x = 1; x < b.Length - 1; x++)
             {
                 if (!(b[x] == b[x - 1] || b[x] == b[x + 1]))
                     return "NO";
@@ -2790,17 +2790,17 @@ namespace MyExercises
 
             StringBuilder sb = new StringBuilder();
 
-            for(int q=1; q<grid.Length-1;q++)   //rows
+            for (int q = 1; q < grid.Length - 1; q++)   //rows
             {
                 sb.Append(grid[q][0].ToString());
-                for(int w=1; w<grid[0].Length-1; w++)
+                for (int w = 1; w < grid[0].Length - 1; w++)
                 {
                     int thisCell = int.Parse(grid[q][w].ToString());
 
-                    int up = int.Parse(grid[q-1][w].ToString());
-                    int down = int.Parse(grid[q+1][w].ToString());
-                    int right = int.Parse(grid[q][w+1].ToString());
-                    int left = int.Parse(grid[q][w-1].ToString());
+                    int up = int.Parse(grid[q - 1][w].ToString());
+                    int down = int.Parse(grid[q + 1][w].ToString());
+                    int right = int.Parse(grid[q][w + 1].ToString());
+                    int left = int.Parse(grid[q][w - 1].ToString());
 
                     if (thisCell > up && thisCell > down && thisCell > right && thisCell > left)
                         sb.Append('X');
@@ -2808,7 +2808,7 @@ namespace MyExercises
                         sb.Append(grid[q][w]);
                 }
 
-                sb.Append(grid[q][width-1].ToString());
+                sb.Append(grid[q][width - 1].ToString());
                 resultGrid[q] = sb.ToString();
                 sb.Clear();
             }
@@ -2818,22 +2818,22 @@ namespace MyExercises
 
         public static void almostSorted(int[] arr)
         {
-            int leftIndex = 0; 
+            int leftIndex = 0;
             int rightIndex = 0;
             bool startedDown = false;
             bool foundOneSwap = false;
 
-            for(int x=0; x<arr.Length-1; x++)
+            for (int x = 0; x < arr.Length - 1; x++)
             {
-                if(arr[x+1]<arr[x] && !startedDown && !foundOneSwap)    //next index is smaller so we 'start down'
+                if (arr[x + 1] < arr[x] && !startedDown && !foundOneSwap)    //next index is smaller so we 'start down'
                 {
                     leftIndex = x;
-                    rightIndex = x+1;
+                    rightIndex = x + 1;
                     startedDown = true;
                 }
                 else if (startedDown && arr[x + 1] > arr[x])  //if started down, look for back up
                 {
-                    if(arr[x + 1] < arr[leftIndex]) //goes up, but not enough for a reverse
+                    if (arr[x + 1] < arr[leftIndex]) //goes up, but not enough for a reverse
                     {
                         Console.WriteLine("no");
                         return;
@@ -2845,16 +2845,16 @@ namespace MyExercises
                         startedDown = false;
                     }
                 }
-                else if(arr[x + 1] < arr[x] && foundOneSwap)    //if found one and goes back up then NO
+                else if (arr[x + 1] < arr[x] && foundOneSwap)    //if found one and goes back up then NO
                 {
                     Console.WriteLine("no");
                     return;
                 }
             }
-            
-            if(startedDown && !foundOneSwap)
+
+            if (startedDown && !foundOneSwap)
             {
-                if(rightIndex==arr.Length-1 || arr[arr.Length - 1] > arr[leftIndex])
+                if (rightIndex == arr.Length - 1 || arr[arr.Length - 1] > arr[leftIndex])
                 {
                     foundOneSwap = true;
                     //leftIndex = arr.Length;
@@ -2864,7 +2864,7 @@ namespace MyExercises
                     foundOneSwap = true;
                     rightIndex = arr.Length - 1;
                 }
-                    
+
             }
 
             if (!foundOneSwap)                        //(rightIndex==arr.Length || arr[leftIndex+1]<arr[rightIndex])
@@ -2877,7 +2877,7 @@ namespace MyExercises
 
             if (foundOneSwap || rightIndex + 1 == arr.Length)
             {
-                if(rightIndex-leftIndex ==1)
+                if (rightIndex - leftIndex == 1)
                 {
                     Console.WriteLine("swap " + (leftIndex + 1) + " " + (rightIndex + 1));
                 }
@@ -2892,9 +2892,9 @@ namespace MyExercises
         public static int flatlandSpaceStations(int n, int[] c)
         {
             Array.Sort(c);
-            int maxDistance = Math.Max(c[0], n-c[c.Length-1]-1);
+            int maxDistance = Math.Max(c[0], n - c[c.Length - 1] - 1);
 
-            for(int x=0; x<c.Length-1;x++)
+            for (int x = 0; x < c.Length - 1; x++)
             {
                 int y = (c[x + 1] - c[x]) / 2;
                 if (y > maxDistance)
@@ -2910,16 +2910,16 @@ namespace MyExercises
         {
             int loaves = 0;
 
-            for(int x=0; x<B.Length-1; x++)
+            for (int x = 0; x < B.Length - 1; x++)
             {
-                if(B[x]%2==1) //is this odd?
+                if (B[x] % 2 == 1) //is this odd?
                 {
                     B[x]++;
-                    B[x+1]++;
+                    B[x + 1]++;
                     loaves += 2;
                 }
             }
-            if (B[B.Length-1] % 2 == 0)
+            if (B[B.Length - 1] % 2 == 0)
             {
                 Console.WriteLine(loaves.ToString());
                 return loaves;
@@ -2929,7 +2929,7 @@ namespace MyExercises
                 Console.WriteLine("NO");
                 return -1;
             }
-                
+
 
 
         }
@@ -2938,7 +2938,7 @@ namespace MyExercises
         public static void xxwhatFlavors(int[] cost, int money)
         {
             var countDict = new Dictionary<int, List<int>>();    //price, list of indices
-            for(int x=0; x<cost.Length; x++)
+            for (int x = 0; x < cost.Length; x++)
             {
                 if (countDict.ContainsKey(cost[x]))
                     countDict[cost[x]].Add(x);
@@ -2946,14 +2946,14 @@ namespace MyExercises
                 {
                     countDict.Add(cost[x], new List<int>());
                     countDict[cost[x]].Add(x);
-                }    
+                }
             }
 
             int remainderAfterOne, a, b, temp;
             foreach (KeyValuePair<int, List<int>> x in countDict)
             {
                 remainderAfterOne = money - x.Key;
-            
+
                 if (countDict.ContainsKey(remainderAfterOne) && countDict[x.Key][0] != countDict[remainderAfterOne][0])      //matching 2nd ice cream  && myHash[x.Key].Count == 1
                 {
                     a = countDict[x.Key][0] + 1;
@@ -2967,7 +2967,7 @@ namespace MyExercises
                     Console.WriteLine(a + " " + b);
                     return;
                 }
-            
+
                 else if (x.Key == remainderAfterOne && countDict[x.Key].Count > 1)    //2 of the same that match
                 {
                     a = countDict[x.Key][0] + 1;
@@ -2996,7 +2996,7 @@ namespace MyExercises
                     Console.WriteLine((countDict[money - cost[x]] + 1) + " " + (x + 1));
                     return;
                 }
-                else if(!countDict.ContainsKey(cost[x]))                                                    //otherwise add price and index to dict
+                else if (!countDict.ContainsKey(cost[x]))                                                    //otherwise add price and index to dict
                 {
                     countDict.Add(cost[x], x);
                 }
@@ -3025,14 +3025,14 @@ namespace MyExercises
 
         public static long triplets(int[] d, int[] e, int[] f)
         {
-            int[] a = d.Distinct().OrderBy(i=>i).ToArray();
+            int[] a = d.Distinct().OrderBy(i => i).ToArray();
             int[] b = e.Distinct().OrderBy(i => i).ToArray();
             int[] c = f.Distinct().OrderBy(i => i).ToArray();
 
 
             for (int x = 0; x < a.Length; x++)
             {
-                
+
                 int q = BinarySearchIterativeMax(c, a[x]);        //get index of #s > value (-1 if no values) //how many #s in next array are >= to me
                 if (q == -1)
                     a[x] = 0;
@@ -3052,9 +3052,9 @@ namespace MyExercises
             long count = 0;
             int countTouse = Math.Min(a.Length, c.Length);
 
-            for(int x = 0; x< countTouse; x++)
+            for (int x = 0; x < countTouse; x++)
             {
-                count += a[x]*c[x];
+                count += a[x] * c[x];
             }
             return count;
         }
@@ -3074,7 +3074,7 @@ namespace MyExercises
                     else
                         return left;   // -1;
                 }
-                    
+
                 if (value < list[middle])
                     right = middle; // - 1;
                 else
@@ -3095,14 +3095,14 @@ namespace MyExercises
             int price = a;
 
             int index = 1;
-            while(myString.Length < s.Length)
+            while (myString.Length < s.Length)
             {
                 do
                 {
                     appender.Append(s[index++]);
                 }
                 while (myString.Length + appender.Length < s.Length && myString.ToString().Contains(appender.ToString() + s[index]));
-                                
+
 
                 //calculate price here
                 int singlePrice = appender.Length * a;
@@ -3144,19 +3144,19 @@ namespace MyExercises
             LinkedList<int> endList = new LinkedList<int>();
             int adjustedIndex = 0;
 
-            for (int x=0; x<queries.Length; x++)
+            for (int x = 0; x < queries.Length; x++)
             {
                 int queryType = queries[x][0];
-                int startIndex = queries[x][1]-1;
-                int endIndex = queries[x][2]-1;
+                int startIndex = queries[x][1] - 1;
+                int endIndex = queries[x][2] - 1;
 
-                if (queryType==1)   //add block to front
+                if (queryType == 1)   //add block to front
                 {
-                    for(int y=endIndex; y>=startIndex;y--)
+                    for (int y = endIndex; y >= startIndex; y--)
                     {
                         //adjustedIndex
-                        frontList.AddFirst(input[y+adjustedIndex]);
-                        input[y+adjustedIndex] = -1;
+                        frontList.AddFirst(input[y + adjustedIndex]);
+                        input[y + adjustedIndex] = -1;
                     }
 
                 }
@@ -3165,8 +3165,8 @@ namespace MyExercises
                     for (int y = startIndex; y <= startIndex; y++)
                     {
                         //adjustedIndex
-                        endList.AddLast(input[y+adjustedIndex]);
-                        input[y+adjustedIndex] = -1;
+                        endList.AddLast(input[y + adjustedIndex]);
+                        input[y + adjustedIndex] = -1;
                     }
 
 
@@ -3174,7 +3174,7 @@ namespace MyExercises
 
 
             }
-          
+
         }
 
 
@@ -3185,22 +3185,22 @@ namespace MyExercises
             int[] primeNumbers = new int[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599, 601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997, 1009, 1013, 1019, 1021, 1031, 1033, 1039, 1049, 1051, 1061, 1063, 1069, 1087, 1091, 1093, 1097, 1103, 1109, 1117, 1123, 1129, 1151, 1153, 1163, 1171, 1181, 1187, 1193, 1201, 1213, 1217, 1223, 1229, 1231, 1237, 1249, 1259, 1277, 1279, 1283, 1289, 1291, 1297, 1301, 1303, 1307, 1319, 1321, 1327, 1361, 1367, 1373, 1381, 1399, 1409, 1423, 1427, 1429, 1433, 1439, 1447, 1451, 1453, 1459, 1471, 1481, 1483, 1487, 1489, 1493, 1499, 1511, 1523, 1531, 1543, 1549, 1553, 1559, 1567, 1571, 1579, 1583, 1597, 1601, 1607, 1609, 1613, 1619, 1621, 1627, 1637, 1657, 1663, 1667, 1669, 1693, 1697, 1699, 1709, 1721, 1723, 1733, 1741, 1747, 1753, 1759, 1777, 1783, 1787, 1789, 1801, 1811, 1823, 1831, 1847, 1861, 1867, 1871, 1873, 1877, 1879, 1889, 1901, 1907, 1913, 1931, 1933, 1949, 1951, 1973, 1979, 1987, 1993, 1997, 1999, 2003, 2011, 2017, 2027, 2029, 2039, 2053, 2063, 2069, 2081, 2083, 2087, 2089, 2099, 2111, 2113, 2129, 2131, 2137, 2141, 2143, 2153, 2161, 2179, 2203, 2207, 2213, 2221, 2237, 2239, 2243, 2251, 2267, 2269, 2273, 2281, 2287, 2293, 2297, 2309, 2311, 2333, 2339, 2341, 2347, 2351, 2357, 2371, 2377, 2381, 2383, 2389, 2393, 2399, 2411, 2417, 2423, 2437, 2441, 2447, 2459, 2467, 2473, 2477, 2503, 2521, 2531, 2539, 2543, 2549, 2551, 2557, 2579, 2591, 2593, 2609, 2617, 2621, 2633, 2647, 2657, 2659, 2663, 2671, 2677, 2683, 2687, 2689, 2693, 2699, 2707, 2711, 2713, 2719, 2729, 2731, 2741, 2749, 2753, 2767, 2777, 2789, 2791, 2797, 2801, 2803, 2819, 2833, 2837, 2843, 2851, 2857, 2861, 2879, 2887, 2897, 2903, 2909, 2917, 2927, 2939, 2953, 2957, 2963, 2969, 2971, 2999, 3001, 3011, 3019, 3023, 3037, 3041, 3049, 3061, 3067, 3079, 3083, 3089, 3109, 3119, 3121, 3137, 3163, 3167, 3169, 3181, 3187, 3191, 3203, 3209, 3217, 3221, 3229, 3251, 3253, 3257, 3259, 3271, 3299, 3301, 3307, 3313, 3319, 3323, 3329, 3331, 3343, 3347, 3359, 3361, 3371, 3373, 3389, 3391, 3407, 3413, 3433, 3449, 3457, 3461, 3463, 3467, 3469, 3491, 3499, 3511, 3517, 3527, 3529, 3533, 3539, 3541, 3547, 3557, 3559, 3571, 3581, 3583, 3593, 3607, 3613, 3617, 3623, 3631, 3637, 3643, 3659, 3671, 3673, 3677, 3691, 3697, 3701, 3709, 3719, 3727, 3733, 3739, 3761, 3767, 3769, 3779, 3793, 3797, 3803, 3821, 3823, 3833, 3847, 3851, 3853, 3863, 3877, 3881, 3889, 3907, 3911, 3917, 3919, 3923, 3929, 3931, 3943, 3947, 3967, 3989, 4001, 4003, 4007, 4013, 4019, 4021, 4027, 4049, 4051, 4057, 4073, 4079, 4091, 4093, 4099, 4111, 4127, 4129, 4133, 4139, 4153, 4157, 4159, 4177, 4201, 4211, 4217, 4219, 4229, 4231, 4241, 4243, 4253, 4259, 4261, 4271, 4273, 4283, 4289, 4297, 4327, 4337, 4339, 4349, 4357, 4363, 4373, 4391, 4397, 4409, 4421, 4423, 4441, 4447, 4451, 4457, 4463, 4481, 4483, 4493, 4507, 4513, 4517, 4519, 4523, 4547, 4549, 4561, 4567, 4583, 4591, 4597, 4603, 4621, 4637, 4639, 4643, 4649, 4651, 4657, 4663, 4673, 4679, 4691, 4703, 4721, 4723, 4729, 4733, 4751, 4759, 4783, 4787, 4789, 4793, 4799, 4801, 4813, 4817, 4831, 4861, 4871, 4877, 4889, 4903, 4909, 4919, 4931, 4933, 4937, 4943, 4951, 4957, 4967, 4969, 4973, 4987, 4993, 4999, 5003, 5009, 5011, 5021, 5023, 5039, 5051, 5059, 5077, 5081, 5087, 5099, 5101, 5107, 5113, 5119, 5147, 5153, 5167, 5171, 5179, 5189, 5197, 5209, 5227, 5231, 5233, 5237, 5261, 5273, 5279, 5281, 5297, 5303, 5309, 5323, 5333, 5347, 5351, 5381, 5387, 5393, 5399, 5407, 5413, 5417, 5419, 5431, 5437, 5441, 5443, 5449, 5471, 5477, 5479, 5483, 5501, 5503, 5507, 5519, 5521, 5527, 5531, 5557, 5563, 5569, 5573, 5581, 5591, 5623, 5639, 5641, 5647, 5651, 5653, 5657, 5659, 5669, 5683, 5689, 5693, 5701, 5711, 5717, 5737, 5741, 5743, 5749, 5779, 5783, 5791, 5801, 5807, 5813, 5821, 5827, 5839, 5843, 5849, 5851, 5857, 5861, 5867, 5869, 5879, 5881, 5897, 5903, 5923, 5927, 5939, 5953, 5981, 5987, 6007, 6011, 6029, 6037, 6043, 6047, 6053, 6067, 6073, 6079, 6089, 6091, 6101, 6113, 6121, 6131, 6133, 6143, 6151, 6163, 6173, 6197, 6199, 6203, 6211, 6217, 6221, 6229, 6247, 6257, 6263, 6269, 6271, 6277, 6287, 6299, 6301, 6311, 6317, 6323, 6329, 6337, 6343, 6353, 6359, 6361, 6367, 6373, 6379, 6389, 6397, 6421, 6427, 6449, 6451, 6469, 6473, 6481, 6491, 6521, 6529, 6547, 6551, 6553, 6563, 6569, 6571, 6577, 6581, 6599, 6607, 6619, 6637, 6653, 6659, 6661, 6673, 6679, 6689, 6691, 6701, 6703, 6709, 6719, 6733, 6737, 6761, 6763, 6779, 6781, 6791, 6793, 6803, 6823, 6827, 6829, 6833, 6841, 6857, 6863, 6869, 6871, 6883, 6899, 6907, 6911, 6917, 6947, 6949, 6959, 6961, 6967, 6971, 6977, 6983, 6991, 6997, 7001, 7013, 7019, 7027, 7039, 7043, 7057, 7069, 7079, 7103, 7109, 7121, 7127, 7129, 7151, 7159, 7177, 7187, 7193, 7207, 7211, 7213, 7219, 7229, 7237, 7243, 7247, 7253, 7283, 7297, 7307, 7309, 7321, 7331, 7333, 7349, 7351, 7369, 7393, 7411, 7417, 7433, 7451, 7457, 7459, 7477, 7481, 7487, 7489, 7499, 7507, 7517, 7523, 7529, 7537, 7541, 7547, 7549, 7559, 7561, 7573, 7577, 7583, 7589, 7591, 7603, 7607, 7621, 7639, 7643, 7649, 7669, 7673, 7681, 7687, 7691, 7699, 7703, 7717, 7723, 7727, 7741, 7753, 7757, 7759, 7789, 7793, 7817, 7823, 7829, 7841, 7853, 7867, 7873, 7877, 7879, 7883, 7901, 7907, 7919, 7927, 7933, 7937, 7949, 7951, 7963, 7993, 8009, 8011, 8017, 8039, 8053, 8059, 8069, 8081, 8087, 8089, 8093, 8101, 8111, 8117, 8123, 8147, 8161, 8167, 8171, 8179, 8191, 8209, 8219, 8221, 8231, 8233, 8237, 8243, 8263, 8269, 8273, 8287, 8291, 8293, 8297, 8311, 8317, 8329, 8353, 8363, 8369, 8377, 8387, 8389, 8419, 8423, 8429, 8431, 8443, 8447, 8461, 8467, 8501, 8513, 8521, 8527, 8537, 8539, 8543, 8563, 8573, 8581, 8597, 8599, 8609, 8623, 8627, 8629, 8641, 8647, 8663, 8669, 8677, 8681, 8689, 8693, 8699, 8707, 8713, 8719, 8731, 8737, 8741, 8747, 8753, 8761, 8779, 8783, 8803, 8807, 8819, 8821, 8831, 8837, 8839, 8849, 8861, 8863, 8867, 8887, 8893, 8923, 8929, 8933, 8941, 8951, 8963, 8969, 8971, 8999, 9001, 9007, 9011, 9013, 9029, 9041, 9043, 9049, 9059, 9067, 9091, 9103, 9109, 9127, 9133, 9137, 9151, 9157, 9161, 9173, 9181, 9187, 9199, 9203, 9209, 9221, 9227, 9239, 9241, 9257, 9277, 9281, 9283, 9293, 9311, 9319, 9323, 9337, 9341, 9343, 9349, 9371, 9377, 9391, 9397, 9403, 9413, 9419, 9421, 9431, 9433, 9437, 9439, 9461, 9463, 9467, 9473, 9479, 9491, 9497, 9511, 9521, 9533, 9539, 9547, 9551, 9587, 9601, 9613, 9619, 9623, 9629, 9631, 9643, 9649, 9661, 9677, 9679, 9689, 9697, 9719, 9721, 9733 };
             #endregion
 
-            Stack<int>[] queueA = new Stack<int>[q+1];
-            Stack<int>[] queueB = new Stack<int>[q+1];
+            Stack<int>[] queueA = new Stack<int>[q + 1];
+            Stack<int>[] queueB = new Stack<int>[q + 1];
 
             //populate A[0]
             queueA[0] = new Stack<int>();
             for (int x = 0; x < number.Length; x++)
                 queueA[0].Push(number[x]);
 
-            for(int iteration = 1; iteration<=q; iteration++)
+            for (int iteration = 1; iteration <= q; iteration++)
             {
                 queueA[iteration] = new Stack<int>();  //queue A
                 queueB[iteration] = new Stack<int>();  //queue B
-                int myPrimeNumber = primeNumbers[iteration-1];
+                int myPrimeNumber = primeNumbers[iteration - 1];
 
                 int index2 = queueA[iteration - 1].Count;
-                for (int w = 0; w<index2; w++)
+                for (int w = 0; w < index2; w++)
                 {
                     int numToTest = queueA[iteration - 1].Pop();
                     if (numToTest % myPrimeNumber == 0)
@@ -3211,9 +3211,9 @@ namespace MyExercises
             }
 
             var resultsList = new List<int>();
-            for(int y=1; y<q+1; y++)
+            for (int y = 1; y < q + 1; y++)
             {
-                while(queueB[y].Count>0)
+                while (queueB[y].Count > 0)
                     resultsList.Add(queueB[y].Pop());
             }
 
@@ -3232,21 +3232,21 @@ namespace MyExercises
             int minHeightInStack = h[0];
             long maxSizeSoFar = h[0];
 
-            for(int x=1; x<h.Length; x++)
+            for (int x = 1; x < h.Length; x++)
             {
                 long currentSize = minHeightInStack * myStack.Count;
 
-                if(h[x] >= currentSize + minHeightInStack)
+                if (h[x] >= currentSize + minHeightInStack)
                 {
                     myStack.Clear();
                     myStack.Push(h[x]);
                     minHeightInStack = h[x];
                     maxSizeSoFar = h[x];
                 }
-                else if(h[x] < minHeightInStack)
+                else if (h[x] < minHeightInStack)
                 {
                     long newPotentialSize = (myStack.Count + 1) * h[x];
-                    if(newPotentialSize > currentSize)
+                    if (newPotentialSize > currentSize)
                     {
                         maxSizeSoFar = newPotentialSize;
                         minHeightInStack = h[x];
@@ -3293,7 +3293,7 @@ namespace MyExercises
             long maxAdjusted = -1;
             long res;
 
-            for(long x =0; x<queries.Length; x++)
+            for (long x = 0; x < queries.Length; x++)
             {
                 long queryType = queries[x][0];
                 switch (queryType)
@@ -3315,12 +3315,12 @@ namespace MyExercises
                         {
                             if (queries[x][1] < minAdjusted)
                                 minAdjusted = queries[x][1];
-                            if (queries[x][2] > maxAdjusted+1)
-                                maxAdjusted = queries[x][2]+1;
+                            if (queries[x][2] > maxAdjusted + 1)
+                                maxAdjusted = queries[x][2] + 1;
                         }
                         break;
                     case 2:
-                        if(minAdjusted!=-1)
+                        if (minAdjusted != -1)
                         {
                             UpdateBoxArray(boxes, Ones, minAdjusted, maxAdjusted);
                             minAdjusted = -1; //reset ranges to un adjusted values
@@ -3337,7 +3337,7 @@ namespace MyExercises
                             maxAdjusted = -1;
                             Array.Clear(Ones, 0, Ones.Length);
                         }
-                        res = boxes.Skip((int)queries[x][1]).Take((int)queries[x][2] - (int)queries[x][1]+1).Min();
+                        res = boxes.Skip((int)queries[x][1]).Take((int)queries[x][2] - (int)queries[x][1] + 1).Min();
                         Console.WriteLine(res);
                         break;
                     case 4:
@@ -3348,19 +3348,19 @@ namespace MyExercises
                             maxAdjusted = -1;
                             Array.Clear(Ones, 0, Ones.Length);
                         }
-                        res = boxes.Skip((int)queries[x][1]).Take((int)queries[x][2] - (int)queries[x][1]+1).Sum();
+                        res = boxes.Skip((int)queries[x][1]).Take((int)queries[x][2] - (int)queries[x][1] + 1).Sum();
                         Console.WriteLine(res);
                         break;
                 }
             }
         }
 
-        private static void UpdateBoxArray(long[] boxes, long[]Ones, long min, long max)
+        private static void UpdateBoxArray(long[] boxes, long[] Ones, long min, long max)
         {
             boxes[min] += Ones[min];
-            for(long x = min+1; x<=max; x++)
+            for (long x = min + 1; x <= max; x++)
             {
-                Ones[x] = Ones[x - 1] + Ones[ x];
+                Ones[x] = Ones[x - 1] + Ones[x];
                 boxes[x] += Ones[x];
             }
         }
@@ -3379,12 +3379,12 @@ namespace MyExercises
             List<int> lList = new List<int>();
             List<int> bList = new List<int>();
 
-            for(int x=1; x <= l / x; x++)
+            for (int x = 1; x <= l / x; x++)
             {
-                if(l/x == ((decimal)l / (decimal)x))
+                if (l / x == ((decimal)l / (decimal)x))
                 {
                     lList.Add(x);
-                    if(x!=l/x)
+                    if (x != l / x)
                         lList.Add(l / x);
                 }
             }
@@ -3412,14 +3412,14 @@ namespace MyExercises
         {
             Dictionary<int, List<int>> customerTimesDict = new Dictionary<int, List<int>>();
 
-            for (int x = 0; x<orders.Length; x++)
+            for (int x = 0; x < orders.Length; x++)
             {
                 int orderTime = orders[x][0] + orders[x][1];
 
                 if (customerTimesDict.ContainsKey(orderTime))
-                    customerTimesDict[orderTime].Add(x+1);
+                    customerTimesDict[orderTime].Add(x + 1);
                 else
-                    customerTimesDict.Add(orderTime, new List<int>() {x+1 });
+                    customerTimesDict.Add(orderTime, new List<int>() { x + 1 });
             }
 
             int[] times = customerTimesDict.Keys.ToArray();
@@ -3427,7 +3427,7 @@ namespace MyExercises
 
             List<int> results = new List<int>();
 
-            foreach(int time in times)
+            foreach (int time in times)
             {
                 results.AddRange(customerTimesDict[time]);
             }
@@ -3456,8 +3456,8 @@ namespace MyExercises
                 while (index + 1 < myArr.Length && myArr[index + 1] <= weight + 4)
                     index++;
                 index++;
-            } 
-            while (index<myArr.Length);
+            }
+            while (index < myArr.Length);
 
             return result;
         }
@@ -3466,13 +3466,13 @@ namespace MyExercises
         public static void decentNumber(int n)
         {
             int fives = n / 3;                       //3      //  2
-            int threesMod = (n-(fives*3)) % 5;       //2    //
+            int threesMod = (n - (fives * 3)) % 5;       //2    //
 
-            while(threesMod != 0)
+            while (threesMod != 0)
             {
                 fives--;
                 threesMod = (n - (fives * 3)) % 5;
-                if(fives<0)
+                if (fives < 0)
                 {
                     Console.WriteLine(-1);
                     return;
@@ -3482,7 +3482,7 @@ namespace MyExercises
             threesMod = n - (fives * 3);
 
             StringBuilder sb = new StringBuilder();
-            for(int x=0;x<fives;x++)
+            for (int x = 0; x < fives; x++)
                 sb.Append("555");
             for (int x = 0; x < threesMod; x++)
                 sb.Append("3");
@@ -3499,7 +3499,7 @@ namespace MyExercises
 
             List<int> results = new List<int>();
 
-            for(int x=0; x<arr.Length-1; x++)
+            for (int x = 0; x < arr.Length - 1; x++)
             {
                 if (arr[x + 1] - arr[x] < smallestDifference)
                 {
@@ -3523,9 +3523,9 @@ namespace MyExercises
         public static int beautifulPairs(int[] A, int[] B)
         {
             Dictionary<int, int> dictA = new Dictionary<int, int>();    //number, count
- 
 
-            foreach(int i in A)
+
+            foreach (int i in A)
             {
                 if (dictA.ContainsKey(i))
                     dictA[i]++;
@@ -3535,9 +3535,9 @@ namespace MyExercises
 
             int pairs = 0;
 
-            foreach(int i in B)
+            foreach (int i in B)
             {
-                if(dictA.ContainsKey(i) && dictA[i]>0)
+                if (dictA.ContainsKey(i) && dictA[i] > 0)
                 {
                     dictA[i]--;
                     pairs++;
@@ -3546,26 +3546,26 @@ namespace MyExercises
 
             int qq = dictA.Sum(i => i.Value);
 
-            if ( qq > 0)
+            if (qq > 0)
                 return pairs + 1;
             else
-                return pairs-1;
+                return pairs - 1;
         }
 
         public static string funnyString(string s)
         {
-            int[] a = new int[s.Length-1];
-            int[] b = new int[s.Length-1];
+            int[] a = new int[s.Length - 1];
+            int[] b = new int[s.Length - 1];
 
-            for(int x=0; x<s.Length-1; x++)
+            for (int x = 0; x < s.Length - 1; x++)
             {
-                a[x] = Math.Abs(s[x+1] - s[x]);
+                a[x] = Math.Abs(s[x + 1] - s[x]);
                 b[x] = Math.Abs(s[x + 1] - s[x]);
             }
 
             Array.Reverse(b);
 
-            for(int x=0; x<a.Length; x++)
+            for (int x = 0; x < a.Length; x++)
             {
                 if (a[x] != b[x])
                     return "Not Funny";
@@ -3602,14 +3602,14 @@ namespace MyExercises
 
             int specialProblems = 0;
 
-            for(int x = 0; x<arr.Length; x++)
+            for (int x = 0; x < arr.Length; x++)
             {
-                startingPage = endingPage+1;
+                startingPage = endingPage + 1;
                 endingPage += (int)Math.Ceiling((double)arr[x] / k);
 
-                for(int y = 1; y<=arr[x]; y++)
+                for (int y = 1; y <= arr[x]; y++)
                 {
-                    if (y ==  (y-1)/k + startingPage)
+                    if (y == (y - 1) / k + startingPage)
                         specialProblems++;
                 }
             }
@@ -3631,7 +3631,7 @@ namespace MyExercises
             }
 
             int odds = 0;
-            foreach(KeyValuePair<char, int> kvp in myDict)
+            foreach (KeyValuePair<char, int> kvp in myDict)
             {
                 if (kvp.Value % 2 != 0)
                     odds++;
@@ -3647,7 +3647,7 @@ namespace MyExercises
         public static int[] missingNumbers(int[] arr, int[] brr)   //brr original
         {
             var myDict = new Dictionary<int, int>();
-            foreach(int i in brr)
+            foreach (int i in brr)
             {
                 if (myDict.ContainsKey(i))
                     myDict[i]++;
@@ -3664,7 +3664,7 @@ namespace MyExercises
 
             var resultsList = new List<int>();
 
-            foreach (KeyValuePair<int,int> kvp in myDict)
+            foreach (KeyValuePair<int, int> kvp in myDict)
             {
                 resultsList.Add(kvp.Key);
 
@@ -3687,11 +3687,11 @@ namespace MyExercises
 
             //mean
             decimal mean = (decimal)data.Sum(i => i) / (decimal)n;
-            textWriter.WriteLine(Math.Round(mean, 1));    
+            textWriter.WriteLine(Math.Round(mean, 1));
 
             //median
-            if (n%2==1)                     //odd
-                textWriter.WriteLine((decimal)data[data.Length / 2]);     
+            if (n % 2 == 1)                     //odd
+                textWriter.WriteLine((decimal)data[data.Length / 2]);
             else
             {                               //even
                 int a = data[data.Length / 2];
@@ -3703,7 +3703,7 @@ namespace MyExercises
 
             //mode
             var myDict = new Dictionary<int, int>();
-            foreach(int i in data)
+            foreach (int i in data)
             {
                 if (myDict.ContainsKey(i))
                     myDict[i]++;
@@ -3713,7 +3713,7 @@ namespace MyExercises
 
             int maxCount = myDict.Max(i => i.Value);
             int mode = myDict.Where(i => i.Value == maxCount).OrderBy(i => i.Key).First().Key;
-            
+
             //int mode = myDict.OrderBy(i => i.Value).OrderBy(i => i.Key).First().Key;
 
             textWriter.WriteLine(mode);
@@ -3732,7 +3732,7 @@ namespace MyExercises
             int[] weights = Array.ConvertAll(Console.ReadLine().Split(' '), inputTemp => Convert.ToInt32(inputTemp));
 
             decimal sums = 0;
-            for(int x=0; x<n; x++)
+            for (int x = 0; x < n; x++)
             {
                 sums += ((decimal)values[x] * (decimal)weights[x]);
             }
@@ -3755,7 +3755,7 @@ namespace MyExercises
             n -= 1;
             int total = 0;
 
-            while (n>0)
+            while (n > 0)
             {
                 total += n;
                 n--;
@@ -3785,7 +3785,7 @@ namespace MyExercises
             }
             else
             {                               //even
-                topOfA = (values.Length / 2)-1;
+                topOfA = (values.Length / 2) - 1;
                 bottomOfB = (values.Length / 2);
                 a = values[values.Length / 2];
                 b = values[(values.Length / 2) - 1];
@@ -3794,7 +3794,7 @@ namespace MyExercises
 
 
             //Q1
-            if ((topOfA-1) % 2 == 1)                     //odd
+            if ((topOfA - 1) % 2 == 1)                     //odd
             {
                 Q1 = (decimal)values[topOfA / 2];
             }
@@ -3807,13 +3807,13 @@ namespace MyExercises
 
 
             //Q3
-            if ((n-bottomOfB) % 2 == 1)                     //odd
+            if ((n - bottomOfB) % 2 == 1)                     //odd
             {
-                Q3 = (decimal)values[(values.Length+bottomOfB) / 2];
+                Q3 = (decimal)values[(values.Length + bottomOfB) / 2];
             }
             else
             {                               //even
-                a = values[(values.Length + bottomOfB-1) / 2];
+                a = values[(values.Length + bottomOfB - 1) / 2];
                 b = values[((values.Length + bottomOfB) / 2)];
                 Q3 = (decimal)(((decimal)a + (decimal)b) / 2);
             }
@@ -3844,9 +3844,9 @@ namespace MyExercises
             int[] frequencies = Array.ConvertAll(Console.ReadLine().Split(' '), inputTemp => Convert.ToInt32(inputTemp));
 
             List<int> valuesList = new List<int>();
-            for(int x=0;x<n; x++)
+            for (int x = 0; x < n; x++)
             {
-                for(int y=0; y<frequencies[x];y++)
+                for (int y = 0; y < frequencies[x]; y++)
                 {
                     valuesList.Add(rawData[x]);
                 }
@@ -3948,7 +3948,7 @@ namespace MyExercises
             int count = 0;
             ulong multiples = 1;
 
-            while(multiples<=(ulong)n)
+            while (multiples <= (ulong)n)
             {
                 multiples *= (ulong)primeNumbers[count++];
             }
@@ -3962,9 +3962,9 @@ namespace MyExercises
             int result = 1;
             foreach (int i in routes)
             {
-                result = (result *i) % 1234567;
+                result = (result * i) % 1234567;
             }
-                
+
 
             return result;
         }
@@ -3976,8 +3976,8 @@ namespace MyExercises
             r--;
             c--;
 
-            long result = (r * 5) - ((r%2)*5);          //((r - 1) * 5) + ((r - 1) % 2);
-            result += (c  % 5) * 2;
+            long result = (r * 5) - ((r % 2) * 5);          //((r - 1) * 5) + ((r - 1) % 2);
+            result += (c % 5) * 2;
             result += r % 2;
 
             return result;
@@ -4011,13 +4011,13 @@ namespace MyExercises
             double width = Math.Abs(x1 - x2);
             double height = Math.Abs(y1 - y2);
 
-            double wh = (float)width/ (float)height;
+            double wh = (float)width / (float)height;
 
             int count = 0;
 
-            for(double x = height-1; x>0; x--)
+            for (double x = height - 1; x > 0; x--)
             {
-                width = Math.Round((x * wh),5);
+                width = Math.Round((x * wh), 5);
                 if (width == (int)width)
                     count++;
             }
@@ -4076,11 +4076,11 @@ namespace MyExercises
 
             double result = 0;
 
-            for (int x = 2; x >=0; x--)
+            for (int x = 2; x >= 0; x--)
                 result += (factorial(n) / (factorial(x) * factorial(n - x))) * Math.Pow(p, x) * Math.Pow(q, (n - x));
 
             Console.WriteLine("{0:0.000}", result);
-           // textWriter.WriteLine("{0:0.000}", result);
+            // textWriter.WriteLine("{0:0.000}", result);
 
             /////
             double result2 = 0;
@@ -4089,12 +4089,12 @@ namespace MyExercises
                 result2 += (factorial(n) / (factorial(x) * factorial(n - x))) * Math.Pow(p, x) * Math.Pow(q, (n - x));
 
             Console.WriteLine("{0:0.000}", result2);
-           // textWriter.WriteLine("{0:0.000}", result2);
+            // textWriter.WriteLine("{0:0.000}", result2);
 
 
 
             //textWriter.Flush();
-           // textWriter.Close();
+            // textWriter.Close();
 
         }
 
@@ -4110,8 +4110,8 @@ namespace MyExercises
             double b = Convert.ToDouble(nm[1]); //array length
             double n = Convert.ToDouble(Console.ReadLine());
 
-            double p = a/b;
-            double q = (b-a)/b;
+            double p = a / b;
+            double q = (b - a) / b;
 
             double result = 0;
 
@@ -4120,7 +4120,7 @@ namespace MyExercises
             Console.WriteLine("{0:0.000}", result);
             textWriter.WriteLine("{0:0.000}", result);
 
-         
+
             textWriter.Flush();
             textWriter.Close();
 
@@ -4138,7 +4138,7 @@ namespace MyExercises
             int n = Convert.ToInt32(Console.ReadLine());
 
             double p = (double)a / (double)b;
-            double q = 1-p;
+            double q = 1 - p;
 
             double result = 0;
 
@@ -4212,13 +4212,13 @@ namespace MyExercises
 
         static string pangrams(string s)
         {
-            s= s.ToLower();
+            s = s.ToLower();
             var myHash = new HashSet<char>();
             foreach (char c in s)
             {
-                if(c!=' ')
+                if (c != ' ')
                     myHash.Add(c);
-            } 
+            }
 
             if (myHash.Count == 26)
                 return "pangram";
@@ -4229,12 +4229,12 @@ namespace MyExercises
 
         public static string[] weightedUniformStrings(string s, int[] queries)
         {
-            var myHash = new HashSet<int> {(int)s[0] - 96};
+            var myHash = new HashSet<int> { (int)s[0] - 96 };
 
             char lastchar = s[0];
             int charCount = 1;
 
-            for (int x=1;x<s.Length; x++)
+            for (int x = 1; x < s.Length; x++)
             {
                 char currentChar = s[x];
                 int currentCharValue = (int)currentChar - 96;
@@ -4242,7 +4242,7 @@ namespace MyExercises
                 if (currentChar == lastchar)
                 {
                     charCount++;
-                    myHash.Add(currentCharValue*charCount);
+                    myHash.Add(currentCharValue * charCount);
                 }
                 else
                 {
@@ -4254,7 +4254,7 @@ namespace MyExercises
 
             string[] result = new string[queries.Length];
 
-            for(int x = 0; x<queries.Length; x++)
+            for (int x = 0; x < queries.Length; x++)
             {
                 if (myHash.Contains(queries[x]))
                     result[x] = "Yes";
@@ -4317,7 +4317,7 @@ namespace MyExercises
             int luckBalance = 0;
             List<int> importantContests = new List<int>();
 
-            for(int x=0; x<contests.Length; x++)
+            for (int x = 0; x < contests.Length; x++)
             {
                 int luck = contests[x][0];
                 int importance = contests[x][1];
@@ -4332,7 +4332,7 @@ namespace MyExercises
 
             importantContests.Sort();
 
-            for(int x=0; x<importantContests.Count; x++)
+            for (int x = 0; x < importantContests.Count; x++)
             {
                 if (x < importantContests.Count - k)
                     luckBalance -= importantContests[x];
@@ -4345,7 +4345,7 @@ namespace MyExercises
 
         public static void separateNumbers(string s)
         {
-            if(s.Length<2)
+            if (s.Length < 2)
             {
                 Console.WriteLine("NO");
                 return;
@@ -4355,15 +4355,15 @@ namespace MyExercises
             int index = 0;
             int incrementBase = 0;   //add 1 if next number goes up a digit (999 -> 1000)
             long currentNumber, nextNumber;
-            long successfulFirstNumber =0;
+            long successfulFirstNumber = 0;
             bool foundSucessfulFirstNumber = false;
 
             while (index + digitCount + digitCount + incrementBase <= s.Length)
             {
                 currentNumber = long.Parse(s.Substring(index, digitCount));
-                nextNumber = long.Parse(s.Substring(index + digitCount, digitCount+incrementBase));
+                nextNumber = long.Parse(s.Substring(index + digitCount, digitCount + incrementBase));
 
-                while (nextNumber-1!=currentNumber)
+                while (nextNumber - 1 != currentNumber)
                 {
                     if (nextNumber * 10 == currentNumber + 1)
                         incrementBase = 1;
@@ -4375,17 +4375,17 @@ namespace MyExercises
                         Console.WriteLine("NO");
                         return;
                     }
-                        
+
                     currentNumber = long.Parse(s.Substring(index, digitCount));
-                    nextNumber = long.Parse(s.Substring(index + digitCount, digitCount+incrementBase));
+                    nextNumber = long.Parse(s.Substring(index + digitCount, digitCount + incrementBase));
                 }
 
-                if(!foundSucessfulFirstNumber)
+                if (!foundSucessfulFirstNumber)
                 {
                     successfulFirstNumber = currentNumber;
                     foundSucessfulFirstNumber = true;
                 }
-                
+
                 index += digitCount;
                 digitCount += incrementBase;
                 incrementBase = 0;
@@ -4402,17 +4402,17 @@ namespace MyExercises
             List<HashSet<char>> stones = new List<HashSet<char>>();
             Dictionary<char, int> mineralCount = new Dictionary<char, int>();
 
-            for (int x=0; x< numStones; x++)
+            for (int x = 0; x < numStones; x++)
             {
                 string s = arr[x];
 
                 stones.Add(new HashSet<char>());
-                foreach(char c in s)
+                foreach (char c in s)
                 {
                     stones[x].Add(c);
                 }
 
-                foreach(char c in stones[x])
+                foreach (char c in stones[x])
                 {
                     if (mineralCount.ContainsKey(c))
                         mineralCount[c]++;
@@ -4436,11 +4436,11 @@ namespace MyExercises
             int result = 1;
             const int MODNUM = 1000000007;
 
-            for (int x=1; x<=a.Count; x++)
+            for (int x = 1; x <= a.Count; x++)
             {
                 int nextNumb = a[x - 1] * x;
                 result = ((result % MODNUM) + (nextNumb % MODNUM)) % MODNUM;
-           
+
             }
 
             return result;
@@ -4451,7 +4451,7 @@ namespace MyExercises
             long count = 0;
             Dictionary<long, long> myDict = new Dictionary<long, long>();
 
-            for(int i = 0; i<freq.Count; i++)
+            for (int i = 0; i < freq.Count; i++)
             {
                 int weight = i + 1;
                 long amount = freq[i];
@@ -4463,19 +4463,147 @@ namespace MyExercises
 
 
 
-                if (myDict.ContainsKey(weight - 1) && amount>0)
+                if (myDict.ContainsKey(weight - 1) && amount > 0)
                 {
                     count++;
-                    myDict.Remove(weight-1);
+                    myDict.Remove(weight - 1);
                 }
-                else if(amount>0)
-                        myDict.Add(weight, 1);
+                else if (amount > 0)
+                    myDict.Add(weight, 1);
 
             }
             return count;
         }
 
 
+        public static long roadsAndLibraries(int n, int c_lib, int c_road, int[][] roads)       // n=# of cities
+        {
+            if (c_lib < c_road)
+                return (long)n * (long)c_lib;
+
+            Dictionary<int, List<int>> adjacencyList = new Dictionary<int, List<int>>();
+            CreateAdjacencyList(adjacencyList, roads, n);
+
+            HashSet<int> citiesSeen = new HashSet<int>();
+            Dictionary<int, List<int>> cityLoops = new Dictionary<int, List<int>>();
+            Queue<int> thisLoop = new Queue<int>();
+
+            int loopNumber = 1;
+
+            foreach(KeyValuePair<int, List<int>> c in adjacencyList)
+            {
+                int thisCity = c.Key;
+                if (!citiesSeen.Contains(thisCity))
+                {
+                    thisLoop.Enqueue(thisCity);
+                    citiesSeen.Add(thisCity);
+                    cityLoops.Add(loopNumber, new List<int>() {thisCity });
+
+                    while (thisLoop.Count > 0)
+                    {
+                        int key = thisLoop.Dequeue();
+
+                        foreach (int i in adjacencyList[key])
+                        {
+                            if (!citiesSeen.Contains(i))
+                            {
+                                cityLoops[loopNumber].Add(i);
+                                thisLoop.Enqueue(i);
+                                citiesSeen.Add(i);
+                            }
+                        }
+                    }
+                    loopNumber++;
+                }
+            }
+
+            long cost = (long)cityLoops.Count * (long)c_lib; //add one library per loop
+
+            foreach(KeyValuePair<int, List<int>> kvp in cityLoops)   //add roads
+                cost += (long)(kvp.Value.Count-1) * (long)c_road;  
+            //Console.Out(cost);
+            return cost;
+        }
+
+        private static void CreateAdjacencyList(Dictionary<int, List<int>> list, int[][] roads, int totalCities)
+        {
+            foreach(int[] r in roads)
+            {
+                int start = r[0];
+                int end = r[1];
+
+                if(list.ContainsKey(start))
+                {
+                    if (!list[start].Contains(end))
+                        list[start].Add(end);
+                }
+                else
+                {
+                    list.Add(start, new List<int> { end});
+                }
+
+                if (list.ContainsKey(end))
+                {
+                    if (!list[end].Contains(start))
+                        list[end].Add(start);
+                }
+                else
+                {
+                    list.Add(end, new List<int> { start });
+                }
+            }
+
+            for(int x=1; x<=totalCities; x++)
+            {
+                if (!list.ContainsKey(x))
+                    list.Add(x, new List<int>());
+            }
+        }
+
+
+
+        static int[] bfs(int n, int m, int[][] edges, int s)
+        {
+            var adjacencyList = new Dictionary<int, List<int>>();
+            CreateAdjacencyList(adjacencyList, edges, n);
+
+            var myQueue = new Queue<int>();
+            var results = new Dictionary<int, int>();    //city, shortest route
+
+            foreach(KeyValuePair<int, List<int>> kvp in adjacencyList)
+            {
+                int currentKey = kvp.Key;
+                if (currentKey == s)
+                    break;
+
+                int steps = 1;
+                myQueue.Enqueue(currentKey);
+
+                while(myQueue.Count>0)
+                {
+                    int step = myQueue.Dequeue();
+                    if (!results.ContainsKey(currentKey))
+                    {
+                        
+
+                    }
+
+                }
+                
+
+
+            }
+
+
+
+
+
+
+            int[] finalResults = new int[n - 1];
+
+
+            return finalResults;
+        }
 
 
 
