@@ -20,7 +20,7 @@ namespace MyExercises
             {
                 return label;
             }
-
+            
         }
 
         Node[] array = new Node[10];

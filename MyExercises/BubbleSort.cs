@@ -37,9 +37,9 @@ namespace MyExercises
             for(int x=0; x<array.Length; x++)
             {
                 int temp = array[x];
-                int y=x;
+                int y;
 
-                for(y=x; y>0; y--)
+                for (y=x; y>0; y--)
                 {
                     if(temp<array[y-1])
                         array[y]=array[y-1];

@@ -136,7 +136,7 @@ namespace MyExercises
         }
 
 
-
+        //breadth first
         public void LevelOrderTraverse()  //overload method w/o parameter
         {
             for(int x=0; x<=Height(); x++)
@@ -201,7 +201,7 @@ namespace MyExercises
 
         private bool IsEqual(Node T1, Node T2)
         {
-            if (T1 == null & T2 == null)
+            if (T1 == null && T2 == null)
                 return true;
             if (T1 == null || T2 == null)
                 return false;
