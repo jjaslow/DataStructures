@@ -12,38 +12,11 @@ namespace MyExercises
     {
         static void Main(string[] args)
         {
-            //int[] arr = new int[] { 1, 2, 8, 9, 12, 16 };
 
-            //BinaryTreeNode a = new BinaryTreeNode(8);
-            //BinaryTreeNode b = new BinaryTreeNode(3);
-            //BinaryTreeNode c = new BinaryTreeNode(10);
-            //BinaryTreeNode d = new BinaryTreeNode(1);
-            //BinaryTreeNode e = new BinaryTreeNode(6);
-            //BinaryTreeNode f = new BinaryTreeNode(14);
-            //BinaryTreeNode g = new BinaryTreeNode(4);
-            //BinaryTreeNode h = new BinaryTreeNode(7);
-            //BinaryTreeNode i = new BinaryTreeNode(13);
-            //a.Left = b;
-            //a.Right = c;
+            int[] xx = { 1, 2,1,3};            //
+            int x = getMaximumEatenDishCount(0, xx, 0);
 
-            //b.Left = d;
-            //b.Right = e;
-
-            //c.Right = f;
-
-            //e.Left = g;
-            //e.Right = h;
-
-            //f.Left = i;
-
-
-            //Query q1 = new Query { num = 1, ch = 'a' };
-            //List<Query> q = new List<Query>();
-            //q.Add(q1);
-            //Console.WriteLine(NodesInSubTree(q, "aba"));
-
-            string r = findEncryptedWord("facebook");
-            Console.WriteLine(r);
+            Console.WriteLine(x);
             Console.ReadLine();
         }
 
@@ -371,6 +344,297 @@ namespace MyExercises
                 return s.Length / 2;
             else
                 return (s.Length / 2) - 1;
+        }
+
+        private static int matchingPairs(string s, string t)
+        {
+            int preMatchingPairs = 0;
+            Dictionary<char, int> duplicatesS = new Dictionary<char, int>();
+            Dictionary<char, int> misMatchS = new Dictionary<char, int>();
+            Dictionary<char, int> misMatchT = new Dictionary<char, int>();
+
+            for (int x = 0; x < s.Length; x++)
+            {
+                if (s[x] == t[x])
+                {
+                    preMatchingPairs++;
+                    if (duplicatesS.ContainsKey(s[x]))
+                        duplicatesS[s[x]]++;
+                    else
+                        duplicatesS.Add(s[x], 1);
+                }
+                else
+                {
+                    if (!misMatchS.ContainsKey(s[x]))
+                        misMatchS.Add(s[x], 1);
+
+                    if (!misMatchT.ContainsKey(t[x]))
+                        misMatchT.Add(t[x], 1);
+                }
+            }
+
+            int misMatchPairs = 0;
+            foreach(var kvpS in misMatchS)
+            {
+                if (misMatchT.ContainsKey(kvpS.Key))
+                    misMatchPairs++;
+
+                if (misMatchPairs == 2)
+                    break;
+            }
+
+            bool sDuplicates = false;
+            foreach (var kvpS in duplicatesS)
+            {
+                if(kvpS.Value>=2)
+                {
+                    sDuplicates = true;
+                    break;
+                }
+            }
+
+            if (misMatchPairs == 0)
+            {
+                if (sDuplicates)
+                    return preMatchingPairs;
+                else if(misMatchS.Count==1)
+                {
+                    return preMatchingPairs-1;
+                }
+                else if(misMatchS.Count==2)
+                {
+                    return preMatchingPairs;
+                }
+                else
+                    return preMatchingPairs - 2;
+            }
+            else if (misMatchPairs == 1)
+            {
+                if (sDuplicates)
+                    return preMatchingPairs;
+                else
+                    return preMatchingPairs - 1;
+            }
+            else
+            {
+                return preMatchingPairs + 2;
+            }
+        }
+
+
+        public static long getSecondsRequired(long N, int F, long[] P)
+        {
+            Array.Sort(P);
+            long holes = 0;
+
+            for(int x = 0; x<P.Length-1; x++)
+            {
+                long toAdd = P[x + 1] - P[x] - 1;
+                holes += toAdd;
+            }
+
+            holes += N - P[F - 1]-1;
+            holes += F;
+
+            return holes;
+        }
+
+
+        public static long getMinCodeEntryTime(int N, int M, int[] C)
+        {
+            long results = 0;
+            int currentValue = 1;
+
+            foreach(int nextnumber in C)
+            {
+                int up = Math.Abs(nextnumber - currentValue);
+                int down = N - up;
+
+                results += Math.Min(up, down);
+                currentValue = nextnumber;
+            }
+
+
+            return results;
+        }
+
+        public static long getMinCodeEntryTimeDouble(int N, int M, int[] C)
+        {
+            long results = 0;
+            int currentValueA = 1;
+            int currentValueB = 1;
+
+            foreach (int nextnumber in C)
+            {
+                int upA = Math.Abs(nextnumber - currentValueA);
+                int downA = N - upA;
+                int minA = Math.Min(upA, downA);
+
+                int upB = Math.Abs(nextnumber - currentValueB);
+                int downB = N - upB;
+                int minB = Math.Min(upB, downB);
+
+                if(minA<=minB)
+                {
+                    results += (long)minA;
+                    currentValueA = nextnumber;
+                }
+                else
+                {
+                    results += (long)minB;
+                    currentValueB = nextnumber;
+                }
+            }
+            return results;
+        }
+
+        public static long getMaxAdditionalDinersCount(long N, long K, int M, long[] S)
+        {
+            long newDiners = 0;
+
+            Array.Sort(S);
+
+            long numOfSeats;
+            long spaceNeeded;
+            long possibleDiners;
+
+            numOfSeats = S[0] - 1;
+            spaceNeeded = 1 + K;
+            possibleDiners = numOfSeats / spaceNeeded;
+            newDiners += possibleDiners;
+
+
+            numOfSeats = N - S[M-1];
+            spaceNeeded = 1 + K;
+            possibleDiners = numOfSeats / spaceNeeded;
+            newDiners += possibleDiners;
+
+            for(int x=0; x<S.Length-1; x++)
+            {
+
+                numOfSeats = (S[x + 1]) - (S[x]+K+1);
+                if(numOfSeats<0)
+                        continue;
+
+                spaceNeeded = 1 + K;
+                possibleDiners = numOfSeats / spaceNeeded;
+                newDiners += possibleDiners;
+            }
+
+            return newDiners;
+        }
+
+
+        public static int getUniformIntegerCountInInterval(long A, long B)
+        {
+            int result = 0;
+
+            //get first digit
+            int firstDigit = int.Parse(A.ToString().Substring(0, 1));
+
+
+            int digitLoop = firstDigit;
+            int powerLoop = 1;
+            long currentNumber = 0;
+
+            while (currentNumber<=B)
+            {
+                
+                currentNumber = CreateNumberFromScale(digitLoop, powerLoop);
+
+                if (currentNumber >= A && currentNumber <= B)
+                    result++;
+
+                if(digitLoop < 9)
+                {
+                    digitLoop++;
+                }
+                else
+                {
+                    digitLoop = 1;
+                    powerLoop++;
+                }
+            }
+
+            return result;
+        }
+
+        static long CreateNumberFromScale(int digit, int power)
+        {
+            long result = digit;
+
+            int loop = 1;
+            while(loop<power)
+            {
+                result *= 10;
+                result += digit;
+                loop++;
+            }
+            return result;
+        }
+
+        public static int getMinimumDeflatedDiscCount(int N, int[] R)
+        {
+
+            int deflations = 0;
+
+            for(int x=R.Length-1; x>=1; x--)
+            {
+                if (R[x] < x + 1)
+                    return -1;
+
+                if (R[x-1]>=R[x])
+                {
+                    R[x - 1] = R[x] - 1;
+                    deflations++;
+                }
+            }
+            return deflations;
+        }
+
+
+        public static int getMinProblemCount(int N, int[] S)
+        {
+            int onesTotal = 0;
+            int twosTotal = 0;
+
+            foreach(int quiz in S)
+            {
+                int totalTotal = onesTotal + (twosTotal * 2);
+                if(quiz > totalTotal)
+                {
+
+                    twosTotal += ((quiz - twosTotal*2) / 2);
+                }
+                //if (quiz > (onesTotal + (twosTotal * 2)))
+                //    onesTotal++;
+                if (quiz % 2 == 1)
+                    onesTotal=1;
+
+            }
+
+
+            return onesTotal + twosTotal;
+
+        }
+
+        public static int getMaximumEatenDishCount(int N, int[] D, int K)
+        {
+            int result = 0;
+
+            HashSet<int> eaten = new HashSet<int>();
+      
+            for(int x=1; x<=D.Length; x++)
+            {
+                if (!eaten.Contains(D[x-1]))
+                {
+                    if (x > K)
+                       eaten.Remove(D[x - 1 - K]);
+                    eaten.Add(D[x-1]);
+                    result++;
+                }
+            }
+            return result;
         }
 
 

@@ -226,8 +226,8 @@ namespace MyExercises
             if (node.Value < min || node.Value > max)
                     return false;
 
-            return IsBinarySearchTree(node.LeftChild, min, node.Value) &&
-                    IsBinarySearchTree(node.RightChild, node.Value, max);
+            return IsBinarySearchTree(node.LeftChild, min, node.Value-1) &&
+                    IsBinarySearchTree(node.RightChild, node.Value+1, max);
        }
 
 
@@ -243,7 +243,10 @@ namespace MyExercises
             if (node == null)
                 return;
             if (Distance == 0)
+            {
                 List.Add(node.Value);
+                return;
+            }
 
             NodesAtKDistance(node.LeftChild, Distance-1, List);
             NodesAtKDistance(node.RightChild, Distance-1, List);
