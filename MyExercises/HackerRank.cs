@@ -4584,7 +4584,7 @@ namespace MyExercises
                     int step = myQueue.Dequeue();
                     if (!results.ContainsKey(currentKey))
                     {
-                        
+                        throw new Exception("");
 
                     }
 
@@ -4604,7 +4604,6 @@ namespace MyExercises
 
             return finalResults;
         }
-
 
 
 

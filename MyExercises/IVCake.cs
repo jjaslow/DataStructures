@@ -144,15 +144,15 @@ namespace MyExercises
                     movieDict.Add(i, 1);
             }
 
-            foreach(int i in movieLengths)
+            foreach(int firstMovieLength in movieLengths)
             {
-                int secondMovie = flightLength - i;                
+                int secondMovieLength = flightLength - firstMovieLength;                
 
-                if(movieDict.ContainsKey(secondMovie))
+                if(movieDict.ContainsKey(secondMovieLength))
                 {
-                    if (i == secondMovie && movieDict[i] > 1)
+                    if (firstMovieLength == secondMovieLength && movieDict[firstMovieLength] > 1)
                         return true;
-                    else if(i!=secondMovie)
+                    else if(firstMovieLength!=secondMovieLength)
                         return true;
                 }
             }
@@ -413,9 +413,9 @@ namespace MyExercises
             -most graph algorithms are O(n log n) or slower
             -nodes are stored in an array (as a dictionary), usually as adjency lists (dictionary of node, and a linked list of connections)
 
-            Breadth-First Search: explore level by level starting at root. used to find shortest path and any other reachable node. requires more memory than DFS. Uses a queue (hit all 1-hops, then all 2-hops, and so on). Memory used is proportional to breadth of tree. O(N+M), where M = current node's neighbors (ie connections between the users).
+            Breadth-First Search: explore level by level starting at root. used to find shortest path and any other reachable node. requires more memory than DFS. Uses a queue (hit all 1-hops, then all 2-hops, and so on)(enqueue all 1 hops, then as you dequeue them, enqueue the next level). Memory used is proportional to breadth of tree. O(N+M), where M = current node's neighbors (ie connections between the users).
 
-            Depth-First Search: go as deep as possible down 1 path before trying another. uses recursion. Uses a stack. Memory used is proportional to depth of tree.
+            Depth-First Search: go as deep as possible down 1 path before trying another. uses recursion. Or can use a stack to track nodes to visit next (for iterative methods). Memory used is proportional to depth of tree.
 
 
             -is there a path btw 2 nodes? run either search from one node and see if you reach the other.
@@ -947,5 +947,30 @@ namespace MyExercises
             Value = value;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 

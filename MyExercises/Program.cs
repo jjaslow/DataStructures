@@ -13,12 +13,132 @@ namespace MyExercises
         static void Main(string[] args)
         {
 
-            int[] xx = { 1, 2,1,3};            //
-            int x = getMaximumEatenDishCount(0, xx, 0);
+            GroupAnagrams(new string[] { "eat", "tea", "tan", "ate", "nat", "bat" });
 
-            Console.WriteLine(x);
+
+
+
+
+
+
+            Console.WriteLine("a");
             Console.ReadLine();
         }
+
+
+        //public static int isPrime(long n)
+        //{
+
+        //}
+
+
+        public static int getMin(string s)
+        {
+            Stack<char> myStack = new Stack<char>();
+            int result = 0;
+
+            char left = '(';
+            char right = ')';
+
+            for (int x = 0; x < s.Length; x++)
+            {
+                char newChar = s[x];
+                if (newChar == left)
+                    myStack.Push(newChar);
+                else if (myStack.Count == 0)
+                {
+                    result++;
+                }
+                else
+                {
+                    myStack.Pop();
+                }
+            }
+
+            result += myStack.Count;
+
+            return result;
+        }
+
+
+
+        public static int stockPairs(List<int> stocksProfit, long target)
+        {
+            int remainder;
+            int result = 0;
+
+            //profit, count
+            Dictionary<int, int> stocks = new Dictionary<int, int>();
+
+            foreach (var profit in stocksProfit)
+            {
+                if (!stocks.ContainsKey(profit))
+                    stocks.Add(profit, 1);
+                else
+                    stocks[profit]++;
+            }
+
+            foreach (var profit in stocksProfit)
+            {
+                int price = profit;
+                remainder = (int)(target - price);
+
+                if (stocks.ContainsKey(remainder) && stocks[remainder] > 0)
+                {
+                    Console.WriteLine(price + "/ " + stocks[price] + " :: " + remainder + "/ " + stocks[remainder]);
+                    if (remainder == price)
+                    {
+                        int tempResult = stocks[price] / 2;
+                        result += tempResult;
+                        stocks[remainder] -= 2;
+                    }
+                    else
+                    {
+                        int temp = Math.Min(stocks[price], stocks[remainder]);
+                        Console.WriteLine(temp);
+                        //result += temp;
+                        result++;
+
+                        //stocks[price]--;
+                        //if (stocks[price] == 0)
+                        stocks.Remove(price);
+
+                        //stocks[remainder]--;
+                        //if (stocks[remainder] == 0)
+                        stocks.Remove(remainder);
+                    }
+
+                }
+
+            }
+
+
+            return result;
+        }
+
+
+        public static int isPrime(long n)
+        {
+            var top = Math.Floor(Math.Sqrt(n));
+
+
+            for (int x = 2; x <= top; x++)
+            {
+                if (n % x == 0)
+                    return x;
+            }
+
+
+            return 1;
+        }
+
+
+
+
+
+
+
+
 
 
         //FB IV Prep
@@ -270,7 +390,7 @@ namespace MyExercises
             List<int> result = new List<int>();
             Queue<int> nodesToVisit = new Queue<int>();
 
-            foreach(var q in queries)
+            foreach (var q in queries)
             {
                 int startingNode = q.num;
                 char query = q.ch;
@@ -279,7 +399,7 @@ namespace MyExercises
 
                 nodesToVisit.Enqueue(startingNode);
 
-                while(nodesToVisit.Count>0)
+                while (nodesToVisit.Count > 0)
                 {
                     int val = nodesToVisit.Dequeue();
                     val--;
@@ -289,7 +409,7 @@ namespace MyExercises
                     val++;
                     if (val * 2 < stringLength)
                         nodesToVisit.Enqueue(val * 2);
-                    if ((val * 2) + 1 < stringLength+1)
+                    if ((val * 2) + 1 < stringLength + 1)
                         nodesToVisit.Enqueue((val * 2) + 1);
                 }
 
@@ -303,7 +423,7 @@ namespace MyExercises
         private static String findEncryptedWord(String s)
         {
             string result = "";
-         
+
             if (s.Length == 0)
                 return result;
 
@@ -327,9 +447,9 @@ namespace MyExercises
             String s1 = s.Substring(0, middle);
             result += findEncryptedWord(s1, GetMiddle(s1));
 
-            if(middle+1<s.Length)
+            if (middle + 1 < s.Length)
             {
-                String s2 = s.Substring(middle+1, s.Length-(middle + 1));
+                String s2 = s.Substring(middle + 1, s.Length - (middle + 1));
                 result += findEncryptedWord(s2, GetMiddle(s2));
             }
 
@@ -374,7 +494,7 @@ namespace MyExercises
             }
 
             int misMatchPairs = 0;
-            foreach(var kvpS in misMatchS)
+            foreach (var kvpS in misMatchS)
             {
                 if (misMatchT.ContainsKey(kvpS.Key))
                     misMatchPairs++;
@@ -386,7 +506,7 @@ namespace MyExercises
             bool sDuplicates = false;
             foreach (var kvpS in duplicatesS)
             {
-                if(kvpS.Value>=2)
+                if (kvpS.Value >= 2)
                 {
                     sDuplicates = true;
                     break;
@@ -397,11 +517,11 @@ namespace MyExercises
             {
                 if (sDuplicates)
                     return preMatchingPairs;
-                else if(misMatchS.Count==1)
+                else if (misMatchS.Count == 1)
                 {
-                    return preMatchingPairs-1;
+                    return preMatchingPairs - 1;
                 }
-                else if(misMatchS.Count==2)
+                else if (misMatchS.Count == 2)
                 {
                     return preMatchingPairs;
                 }
@@ -427,13 +547,13 @@ namespace MyExercises
             Array.Sort(P);
             long holes = 0;
 
-            for(int x = 0; x<P.Length-1; x++)
+            for (int x = 0; x < P.Length - 1; x++)
             {
                 long toAdd = P[x + 1] - P[x] - 1;
                 holes += toAdd;
             }
 
-            holes += N - P[F - 1]-1;
+            holes += N - P[F - 1] - 1;
             holes += F;
 
             return holes;
@@ -445,7 +565,7 @@ namespace MyExercises
             long results = 0;
             int currentValue = 1;
 
-            foreach(int nextnumber in C)
+            foreach (int nextnumber in C)
             {
                 int up = Math.Abs(nextnumber - currentValue);
                 int down = N - up;
@@ -474,7 +594,7 @@ namespace MyExercises
                 int downB = N - upB;
                 int minB = Math.Min(upB, downB);
 
-                if(minA<=minB)
+                if (minA <= minB)
                 {
                     results += (long)minA;
                     currentValueA = nextnumber;
@@ -504,17 +624,17 @@ namespace MyExercises
             newDiners += possibleDiners;
 
 
-            numOfSeats = N - S[M-1];
+            numOfSeats = N - S[M - 1];
             spaceNeeded = 1 + K;
             possibleDiners = numOfSeats / spaceNeeded;
             newDiners += possibleDiners;
 
-            for(int x=0; x<S.Length-1; x++)
+            for (int x = 0; x < S.Length - 1; x++)
             {
 
-                numOfSeats = (S[x + 1]) - (S[x]+K+1);
-                if(numOfSeats<0)
-                        continue;
+                numOfSeats = (S[x + 1]) - (S[x] + K + 1);
+                if (numOfSeats < 0)
+                    continue;
 
                 spaceNeeded = 1 + K;
                 possibleDiners = numOfSeats / spaceNeeded;
@@ -537,15 +657,15 @@ namespace MyExercises
             int powerLoop = 1;
             long currentNumber = 0;
 
-            while (currentNumber<=B)
+            while (currentNumber <= B)
             {
-                
+
                 currentNumber = CreateNumberFromScale(digitLoop, powerLoop);
 
                 if (currentNumber >= A && currentNumber <= B)
                     result++;
 
-                if(digitLoop < 9)
+                if (digitLoop < 9)
                 {
                     digitLoop++;
                 }
@@ -564,7 +684,7 @@ namespace MyExercises
             long result = digit;
 
             int loop = 1;
-            while(loop<power)
+            while (loop < power)
             {
                 result *= 10;
                 result += digit;
@@ -578,12 +698,12 @@ namespace MyExercises
 
             int deflations = 0;
 
-            for(int x=R.Length-1; x>=1; x--)
+            for (int x = R.Length - 1; x >= 1; x--)
             {
                 if (R[x] < x + 1)
                     return -1;
 
-                if (R[x-1]>=R[x])
+                if (R[x - 1] >= R[x])
                 {
                     R[x - 1] = R[x] - 1;
                     deflations++;
@@ -598,18 +718,18 @@ namespace MyExercises
             int onesTotal = 0;
             int twosTotal = 0;
 
-            foreach(int quiz in S)
+            foreach (int quiz in S)
             {
                 int totalTotal = onesTotal + (twosTotal * 2);
-                if(quiz > totalTotal)
+                if (quiz > totalTotal)
                 {
 
-                    twosTotal += ((quiz - twosTotal*2) / 2);
+                    twosTotal += ((quiz - twosTotal * 2) / 2);
                 }
                 //if (quiz > (onesTotal + (twosTotal * 2)))
                 //    onesTotal++;
                 if (quiz % 2 == 1)
-                    onesTotal=1;
+                    onesTotal = 1;
 
             }
 
@@ -623,14 +743,14 @@ namespace MyExercises
             int result = 0;
 
             HashSet<int> eaten = new HashSet<int>();
-      
-            for(int x=1; x<=D.Length; x++)
+
+            for (int x = 1; x <= D.Length; x++)
             {
-                if (!eaten.Contains(D[x-1]))
+                if (!eaten.Contains(D[x - 1]))
                 {
                     if (x > K)
-                       eaten.Remove(D[x - 1 - K]);
-                    eaten.Add(D[x-1]);
+                        eaten.Remove(D[x - 1 - K]);
+                    eaten.Add(D[x - 1]);
                     result++;
                 }
             }
@@ -638,6 +758,44 @@ namespace MyExercises
         }
 
 
+        public static int getMaxVisitableWebpages(int N, int[] L)
+        {
+            Dictionary<int, HashSet<int>> pageOne = new Dictionary<int, HashSet<int>>();
+
+            for (int x = 0; x < L.Length; x++)
+            {
+                HashSet<int> pagesVisited = new HashSet<int>();
+                int currentPage = x;
+                bool foundPriorConnection = false;
+
+                while (!pagesVisited.Contains(currentPage))
+                {
+                    if (pageOne.ContainsKey(currentPage))
+                    {
+                        foundPriorConnection = true;
+                        break;
+                    }
+
+                    pagesVisited.Add(currentPage);
+                    currentPage = L[currentPage] - 1;
+                }
+
+
+                if (!foundPriorConnection)
+                    pageOne.Add(x, pagesVisited);
+                else
+                {
+                    //priorResult = pageOne[currentPage];
+                    pagesVisited.UnionWith(pageOne[currentPage]);
+                    //if (pageOne[currentPage] == L[x])
+                    //    priorResult--;
+                    pageOne.Add(x, pagesVisited);
+                }
+                Console.WriteLine("round: " + x + ": " + (pagesVisited.Count));
+            }
+
+            return pageOne.Max(t => t.Value.Count);
+        }
 
 
         /////////////////
@@ -652,7 +810,7 @@ namespace MyExercises
 
             double result = Math.Pow(lossRate, inversePower);
             double xxx = (1 - result) * 100;
-            
+
             return (int)xxx;
         }
 
@@ -675,14 +833,14 @@ namespace MyExercises
             int star = input1.IndexOf('*');
             int d = input1.IndexOf('d');
 
-            int sides = int.Parse(input1.Substring(d + 1, input1.Length - d-1));
+            int sides = int.Parse(input1.Substring(d + 1, input1.Length - d - 1));
             int totalRolls;
             double expected = 1 / sides;
 
             if (star != -1)
             {
                 int people = int.Parse(input1.Substring(0, star));
-                int rolls = int.Parse(input1.Substring(star+1, d - star-1));
+                int rolls = int.Parse(input1.Substring(star + 1, d - star - 1));
                 totalRolls = people * rolls;
             }
             else
@@ -703,9 +861,9 @@ namespace MyExercises
         //TopTal
         static int cards(string[] cards)
         {
-            Dictionary<string, int> decks =  new Dictionary<string, int>();
+            Dictionary<string, int> decks = new Dictionary<string, int>();
 
-            for (int x=0; x<cards.Length; x++)
+            for (int x = 0; x < cards.Length; x++)
             {
                 string thisCard = cards[x];
 
@@ -719,7 +877,7 @@ namespace MyExercises
                 return 0;
 
             return decks.Min(kvp => kvp.Value);
-            
+
         }
 
 
@@ -728,7 +886,7 @@ namespace MyExercises
         {
             List<string> myLetters = new List<string>();
 
-            for(int x=0; x<letters.Length; x++)
+            for (int x = 0; x < letters.Length; x++)
             {
                 string thisLetter = letters[x].Substring(0, 1);
                 string nextLeter = letters[x].Substring(2, 1);
@@ -752,6 +910,876 @@ namespace MyExercises
             return myWord;
 
         }
+
+
+
+
+        public class SinglyLinkedListNode
+        {
+            public int data;
+            public SinglyLinkedListNode next;
+
+            public SinglyLinkedListNode(int nodeData)
+            {
+                this.data = nodeData;
+                this.next = null;
+            }
+        }
+
+        //1 4 7  9
+        //2 5
+        //
+
+        static SinglyLinkedListNode MergeLists(SinglyLinkedListNode head1, SinglyLinkedListNode head2)
+        {
+            SinglyLinkedListNode resultHead = new SinglyLinkedListNode(0);
+            SinglyLinkedListNode current = resultHead;
+
+            SinglyLinkedListNode crawl1 = head1;
+            SinglyLinkedListNode crawl2 = head2;
+
+            while (true)
+            {
+                if (crawl1 == null)
+                {
+                    current.data = crawl2.data;
+                    crawl2 = crawl2.next;
+                }
+                else if (crawl2 == null)
+                {
+                    current.data = crawl1.data;
+                    crawl1 = crawl1.next;
+                }
+                else if (crawl1.data < crawl2.data)
+                {
+                    current.data = crawl1.data;
+                    crawl1 = crawl1.next;
+                }
+                else
+                {
+                    current.data = crawl2.data;
+                    crawl2 = crawl2.next;
+                }
+
+                if (crawl1 == null && crawl2 == null)
+                    return resultHead;
+
+                SinglyLinkedListNode next = new SinglyLinkedListNode(0);
+                current.next = next;
+                current = next;
+            }
+        }
+
+
+        public static int getNode(SinglyLinkedListNode llist, int positionFromTail)
+        {
+
+
+
+                SinglyLinkedListNode A = new SinglyLinkedListNode(llist.data)
+                {
+                    next = llist.next
+                };
+                SinglyLinkedListNode B = new SinglyLinkedListNode(llist.data)
+                {
+                    next = llist.next
+                };
+
+                for (int x = 0; x < positionFromTail; x++)
+                    B = B.next;
+
+            while(B.next !=null)
+            {
+                A = A.next;
+                B = B.next;
+            }
+
+            return A.data;
+        }
+
+
+        ///
+
+
+
+        public class NotesStore
+        {
+            public NotesStore() { }
+            public List<Note> myNotes = new List<Note>();
+
+            public void AddNote(String _state, String _name)
+            {
+                if (string.IsNullOrEmpty(_name))
+                    throw new Exception("Name cannot be empty");
+
+                string tempState;
+                if (_state.ToLower() == "complete")
+                    tempState = "complete";
+                else if (_state.ToLower() == "active")
+                    tempState = "active";
+                else if (_state.ToLower() == "others")
+                    tempState = "others";
+                else
+                    throw new Exception($"Invalid state {_state}");
+
+                Note newNote = new Note(_state.ToLower(), _name);
+                myNotes.Add(newNote);
+            }
+
+            public List<String> GetNotes(String _state)
+            {
+                string tempState;
+                if (_state.ToLower() == "complete")
+                    tempState = "complete";
+                else if (_state.ToLower() == "active")
+                    tempState = "active";
+                else if (_state.ToLower() == "others")
+                    tempState = "others";
+                else
+                    throw new Exception($"Invalid state {_state}");
+
+                List<String> foundNotes = new List<string>();
+
+                foreach (Note n in myNotes)
+                {
+                    if (n.State == _state.ToLower())
+                        foundNotes.Add((n.Name));
+                }
+                return foundNotes;
+            }
+
+
+            public class Note
+            {
+                public string Name;
+                public string State;
+
+                public Note(String _state, String _name)
+                {
+                    Name = _name;
+                    State = _state;
+                }
+            }
+        }
+
+
+
+
+        public static SortedDictionary<string, Employee> OldestAgeForEachCompany(List<Employee> employees)
+        {
+            HashSet<string> companies = new HashSet<string>();
+            SortedDictionary<string, Employee> results = new SortedDictionary<string, Employee>();
+
+            foreach (Employee e in employees)
+            {
+                companies.Add((e.Company));
+            }
+
+            foreach (string company in companies)
+            {
+                Employee ep = employees.Where(e => e.Company == company).OrderByDescending(e => e.Age).First();
+
+                results.Add(company, ep);
+            }
+
+            return results;
+        }
+
+        public class Employee
+        {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public int Age { get; set; }
+            public string Company { get; set; }
+        }
+
+
+
+        public static int[] TwoSum(int[] nums, int target)
+        {
+            Dictionary<int, int> foundNumbers = new Dictionary<int, int>();
+
+            for (int x=0; x<nums.Length; x++)
+            {
+                int balance = target - nums[x];
+
+                if (foundNumbers.ContainsKey(balance))
+                    return new int[] { x, foundNumbers[balance] };
+
+                if(!foundNumbers.ContainsKey(nums[x]))
+                    foundNumbers.Add(nums[x], x);
+            }
+
+            return new int[] { 0, 0 };
+
+        }
+
+
+
+
+        public class ListNode
+        {
+            public int val;
+            public ListNode next;
+
+        }
+
+        public static ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+        {
+            Stack<int> number = new System.Collections.Generic.Stack<int>();
+            string tempNumber = "";
+            BigInteger result;
+
+
+
+            while(l1!=null)
+            {
+                number.Push(l1.val);
+                l1 = l1.next;
+            }
+
+            while (number.Count > 0)
+                tempNumber += number.Pop().ToString();
+
+            result = BigInteger.Parse(tempNumber);
+
+
+
+
+            tempNumber = "";
+
+            while (l2 != null)
+            {
+                number.Push(l2.val);
+                l2 = l2.next;
+            }
+
+            while (number.Count > 0)
+                tempNumber += number.Pop().ToString();
+
+            BigInteger b = BigInteger.Parse(tempNumber);
+            result += b;
+
+
+
+
+
+            string resultAsString = result.ToString();
+
+            ListNode root = new ListNode { val = int.Parse(resultAsString[resultAsString.Length-1].ToString()), next = null };
+            ListNode pointer = root;
+
+            for (int i = resultAsString.Length - 2; i>=0; i--)
+            {
+                ListNode next = new ListNode();
+                next.val = int.Parse(resultAsString[i].ToString());
+                next.next = null;
+
+                pointer.next = next;
+                pointer = next;
+            }
+
+            return root;
+        }
+
+
+
+        public static int StrStr(string haystack, string needle)
+        {
+            int haystackLength = haystack.Length;
+            int needleLength = needle.Length;
+
+            if (haystackLength < needleLength)
+                return -1;
+
+            for(int index = 0; index< haystackLength; index++)
+            {
+                if (haystackLength - index < needleLength)
+                    return -1;
+
+                if(haystack.Substring(index, needleLength) == needle)
+                {
+                    return index;
+                }
+            }
+            return -1;
+        }
+
+
+
+
+
+        public static int Reverse(int x)
+        {
+            bool isNegative = x < 0;
+
+            string initialNumber = x.ToString();
+            if (isNegative)
+                initialNumber = initialNumber.Substring(1);
+
+            string newNumber = "";
+
+            for(int i = initialNumber.Length-1; i>=0; i--)
+            {
+                newNumber += initialNumber[i];
+            }
+
+            int result;
+            if (!int.TryParse(newNumber, out result))
+            {
+                return 0;
+            }
+
+            if (isNegative)
+                return result * -1;
+            else
+                return result;
+
+
+        }
+
+
+
+        public static int MyAtoi(string s)
+        {
+            s = s.ToLower();
+            char[] numbers = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+            char[] letters = new char[]{ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '.' };
+            int index = 0;
+            bool isNegative = false;
+
+            for (index = 0; index < s.Length; index++)
+            {
+                if (numbers.Contains(s[index]))
+                {
+                    break;
+                }
+                else if(letters.Contains(s[index]))
+                {
+                    return 0;
+                }
+                else if (s[index] == '+')
+                {
+                    isNegative = false;
+                    index++;
+                    break;
+                }
+                else if (s[index] == '-')
+                {
+                    isNegative = true;
+                    index++;
+                    break;
+                }
+            }
+
+            string resultString = "";
+            for (int index2 = index; index2 < s.Length; index2++)
+            {
+                if (!numbers.Contains(s[index2]))
+                {
+                    break;
+                }
+                else
+                {
+                    resultString += s[index2];
+                }
+            }
+
+
+            int finalNumber = 0;
+
+            int power = 1;
+            for(int x = resultString.Length-1; x>=0; x--)
+            {
+                int digit = (resultString[x]-48) * power;
+                long digtitL = (long)(((long)resultString[x] - 48) * (long)power);
+
+                if (!isNegative &&  digit < digtitL)
+                    return int.MaxValue;
+                if (isNegative && digit < digtitL)
+                    return int.MinValue;
+
+
+                finalNumber += digit;
+                power *= 10;
+            }
+
+
+            if (isNegative)
+                finalNumber *= -1;
+
+            return finalNumber;
+        }
+
+
+
+
+        public static int Divide(int dividend, int divisor)
+        {
+            long result = 0;
+            bool doNegate = true;
+
+            if (dividend < 0 && divisor < 0)
+                doNegate = false;
+            if (dividend > 0 && divisor > 0)
+                doNegate = false;
+
+            if ((long)dividend == 2147483648)
+            {
+                if (doNegate)
+                    return -2147483648;
+                else
+                    return 2147483647;
+            }
+                    
+
+            long runningTotal = 0;
+
+            long dividend2 = Math.Abs((long)dividend);
+            long divisor2 = Math.Abs((long)divisor);
+
+            while(runningTotal<dividend2)
+            {
+                result++;
+                runningTotal += divisor2;
+            }
+            if(runningTotal>dividend2)
+                result--;
+
+
+
+            if (doNegate)
+                result *= -1;
+
+            return (int)result;
+        }
+
+
+
+    public class TreeNode
+    {
+      public int val;
+      public TreeNode left;
+      public TreeNode right;
+
+                  public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
+            {
+                this.val = val;
+                this.left = left;
+                this.right = right;
+                     }
+        }
+
+
+
+        public static IList<int> InorderTraversal(TreeNode root)
+        {
+            IList<int> list = new List<int>();
+
+            InorderTraversal(root, list);
+
+            return list;
+        }
+
+
+        static void InorderTraversal(TreeNode node, IList<int> list)
+        {
+            if (node == null)
+                return;
+
+            if (node.left != null)
+                InorderTraversal(node.left, list);
+
+            list.Add(node.val);
+
+            if (node.right != null)
+                InorderTraversal(node.right, list);
+
+        }
+
+        static void PostorderTraversal(TreeNode node, IList<int> list)
+        {
+            if (node == null)
+                return;
+
+            if (node.right != null)
+                InorderTraversal(node.right, list);
+
+            list.Add(node.val);
+
+            if (node.left != null)
+                InorderTraversal(node.left, list);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public static TreeNode SortedArrayToBST(int[] nums)
+        {
+            return CreateNode(nums, 0, nums.Length - 1);
+        }
+
+
+        static TreeNode CreateNode(int[] nums, int left, int right)
+        {
+            if (left > right)
+            {
+                return null;
+            }
+            int mid = left + (right - left) / 2;
+            return new TreeNode(nums[mid], CreateNode(nums, left, mid - 1), CreateNode(nums, mid + 1, right));
+        }
+
+
+
+
+
+        public static int MaxDepth(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+
+            return CrawlTree(root, 0);
+        }
+
+        static int CrawlTree(TreeNode root, int amount)
+        {
+            if (root == null)
+                return amount;
+
+            return Math.Max(CrawlTree(root.left, amount+1), CrawlTree(root.right, amount+1));
+        }
+
+
+
+
+
+        public static int MajorityElement(int[] nums)
+        {
+            Dictionary<int, int> result = new Dictionary<int, int>();
+
+            foreach (int x in nums)
+            {
+                if (result.ContainsKey(x))
+                    result[x]++;
+                else
+                    result.Add(x, 1);
+            }
+            return result.OrderByDescending(x => x.Value).First().Key;
+            
+        }
+
+
+        public static ListNode GetIntersectionNode(ListNode headA, ListNode headB)
+        {
+            HashSet<ListNode> nodes = new HashSet<ListNode>();
+
+            while(headA!=null)
+            {
+                nodes.Add(headA);
+                headA = headA.next;
+            }
+
+            while (headB != null)
+            {
+                if (nodes.Contains(headB))
+                    return headB;
+                headB = headB.next;
+            }
+            return null;
+        }
+
+
+
+
+        public static bool WordBreak(string s, IList<string> wordDict)
+        {
+            foreach(var word in wordDict)
+            {
+                if (!s.Contains(word))
+                    return false;
+
+                int start = s.IndexOf(word);
+
+                s = s.Substring(0, start) + s.Substring(start + word.Length);
+
+            }
+            return true;
+        }
+
+        ///
+
+
+        public class Node
+        {
+            public int val;
+            public Node next;
+            public Node random;
+
+            public Node(int _val)
+            {
+                val = _val;
+                next = null;
+                random = null;
+            }
+
+            public override string ToString()
+            {
+                return "Key: " + val;
+            }
+        }
+
+
+
+        public static Node CopyRandomList(Node head)
+        {
+            if (head == null)
+                return null;
+
+            Node newHead = new Node(head.val);
+
+            Node pointer1 = head;
+            Node pointer2 = newHead;
+
+            Dictionary<Node, Node> visitedAB = new Dictionary<Node, Node>();
+            visitedAB.Add(pointer1, pointer2);
+
+            while (pointer1 != null)
+            {
+                if (pointer1.next == null)
+                {
+
+                }
+                else if (visitedAB.ContainsKey(pointer1.next))
+                {
+                    pointer2.next = visitedAB[pointer1.next];
+                }
+                else
+                {
+                    pointer2.next = new Node(pointer1.next.val);
+                    visitedAB.Add(pointer1.next, pointer2.next);
+                }
+
+
+                if (pointer1.random == null)
+                {
+
+                }
+                else if(visitedAB.ContainsKey(pointer1.random))
+                {
+                    pointer2.random = visitedAB[pointer1.random];
+                }
+                else
+                {
+                    pointer2.random = new Node(pointer1.random.val);
+                    visitedAB.Add(pointer1.random, pointer2.random);
+                }
+
+
+                pointer1 = pointer1.next;
+                pointer2 = pointer2.next;
+            }
+
+            return newHead;
+        }
+
+
+
+
+
+        public static ListNode RemoveNthFromEnd(ListNode head, int n)
+        {
+            if (head.next == null)
+                return null;
+
+
+            ListNode pointerA = head;
+            ListNode pointerB = head;
+
+
+            int index = 0;
+            while(pointerA.next!=null)
+            {
+                if (index == n)
+                    break;
+
+                pointerA = pointerA.next;
+                index++;
+            }
+
+            if (index == n-1)
+                return head.next;
+
+
+            while(pointerA.next != null)
+            {
+                pointerA = pointerA.next;
+                pointerB = pointerB.next;
+            }
+
+            if(pointerA==head)
+            {
+                head.val = pointerA.val;
+            }
+                
+            pointerB.next = pointerB.next.next;
+
+            return head;
+
+        }
+
+
+
+        public static IList<IList<string>> GroupAnagrams(string[] strs)
+        {
+            Dictionary<string, List<string>> words = new Dictionary<string, List<string>>();
+
+            foreach(string s in strs)
+            {
+                string sortedString = String.Concat(s.OrderBy(c => c));
+
+                if (words.ContainsKey(sortedString))
+                    words[sortedString].Add(s);
+                else
+                {
+                    words.Add(sortedString, new List<string> { s });
+                }
+            }
+
+
+
+            IList<IList<string>> results = new List<IList<string>>();
+
+            foreach(var wordArray in words)
+            {
+                results.Add(wordArray.Value);
+            }
+
+
+
+            return results;
+        }
+
+
+
+        public static void SetZeroes(int[][] matrix)
+        {
+            HashSet<int> rows = new HashSet<int>();
+            HashSet<int> cols = new HashSet<int>();
+
+
+            for(int x=0; x<matrix.Length; x++)
+            {
+                for(int y = 0; y<matrix[x].Length; y++)
+                {
+                    if (matrix[x][y] == 0)
+                    { 
+                        rows.Add(x);
+                        cols.Add(y);
+                    }
+                }
+
+            }
+
+            foreach(var row in rows)
+            {
+                matrix[row] = new int[matrix[0].Length];
+            }
+
+            foreach(var col in cols)
+            {
+                for(int x = 0; x < matrix.Length; x++)
+                    matrix[x][col] = 0;
+            }
+        }
+
+
+
+
+        public static bool IsValidBST(TreeNode root)
+        {
+            return CrawlValidBST(root, int.MinValue, int.MaxValue);
+        }
+
+        static bool CrawlValidBST(TreeNode node, long min, long max)
+        {
+            if (node == null)
+                return true;
+
+            if (node.val < min || node.val > max)
+                return false;
+
+
+            return CrawlValidBST(node.left, min, (long)node.val-1) && CrawlValidBST(node.right, (long)node.val+1, max);
+        }
+
+
+
+
+        public static IList<IList<int>> LevelOrder(TreeNode root)
+        {
+            IList<IList<int>> results = new List<IList<int>>();
+
+            if (root == null)
+                return results;
+
+            Queue<TreeNode> nodes = new Queue<TreeNode>();
+            int counter = 1;
+            nodes.Enqueue(root);
+
+
+
+            while (nodes.Count>0)
+            {
+                int nodesThisLevel = counter;
+                counter = 0;
+
+                IList<int> resutsB = new List<int>();
+                
+                for(int x = 0; x< nodesThisLevel; x++)
+                {
+                    TreeNode currentNode = nodes.Dequeue();
+                    resutsB.Add(currentNode.val);
+
+
+                    if(currentNode.left!=null)
+                    {
+                        nodes.Enqueue(currentNode.left);
+                        counter++;
+                    }
+                    if (currentNode.right != null)
+                    {
+                        nodes.Enqueue(currentNode.right);
+                        counter++;
+                    }
+                }
+
+                results.Add(resutsB);
+            }
+
+            return results;
+
+        }
+
+
+
+
+
+
+
+
+
 
 
 
